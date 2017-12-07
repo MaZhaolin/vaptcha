@@ -1,0 +1,148 @@
+{eval 
+    
+    function tpl_vaptcha($style_key, $script, $nodes = '', $hasContainer = true, $id = false) {
+        if(!$id) $id = uniqid();
+        global $_G;
+        $isAi = $_G['cache']['plugin']['vaptcha']['is_ai'] ? 'true' : 'false';
+        $type = $_G['cache']['plugin']['vaptcha']['click_type'] == '1' ? 'float' : 'popup';
+        $isHttps = $_G['cache']['plugin']['vaptcha']['is_https'] ? 'true' : 'false';
+        if ($isHttps == 'false' && $_SERVER['SERVER_PROTOCOL'] == 'HTTP/2.0') $isHttps = 'true';
+        $Https = $isHttps == 'true' ? 'https' : 'http';
+        $style = parse_style($_G['cache']['plugin']['vaptcha'][$style_key]);
+    }
+<!--{block return}-->
+<style>
+    #vaptcha_container_$id {
+        margin-bottom: 10px;
+        $style['style']
+    }
+    .vaptcha-init-main{
+        display: table;
+        width: 100%;
+        height: 100%;
+        background-color: #EEEEEE;
+    }
+    .vaptcha-init-loading {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center
+    }
+
+    .vaptcha-init-loading>a {
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+    }
+    .vaptcha-init-loading>a img{
+        vertical-align: middle
+    }
+    .vaptcha-init-loading .vaptcha-text {
+        font-family: sans-serif;
+        font-size: 12px;
+        color: #CCCCCC;
+        vertical-align: middle
+    }
+    .vaptcha-init-loading .vaptcha-text a {
+        font-family: sans-serif;
+        font-size: 12px;
+        color: #CCCCCC;
+        text-decoration: none;
+    }
+</style>
+<div id='vaptcha_$id' style="display: none">
+    <div class='vaptcha-form'>
+        <input type='hidden' name='vaptcha_challenge'></input>
+        <input type='hidden' name='vaptcha_token'></input>
+    </div>
+<!--{if $hasContainer}-->
+    <label>$style['label']</label>
+    <div id="vaptcha_container_$id">
+        <div class="vaptcha-init-main">
+            <div class="vaptcha-init-loading">
+                <a><img src="https://cdn.vaptcha.com/vaptcha-loading.gif"/></a>
+                <span class="vaptcha-text"><a href="https://www.vaptcha.com/" title="{lang vaptcha:loading_captcha}" target="_blank">{lang vaptcha:loading_captcha}</a>{lang vaptcha:loading_vaptcha}</span>
+            </div>
+        </div>
+    </div>
+<!--{/if}-->       
+</div>
+$nodes
+<script type='text/javascript'>
+(function () { 
+    function addEvent(el, type, cb){
+        if (el.addEventListener) {
+        el.addEventListener(type, cb); 
+        } else if (el.attachEvent)  {
+        el.attachEvent('on' + type, cb);
+        }
+    }
+    function onload() {
+        var initVaptcha = function(element, form, type, successCallback){
+            var xmlHttp;
+            function createxmlHttpRequest() {
+                if (window.ActiveXObject) {
+                    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                } else if (window.XMLHttpRequest) {
+                    xmlHttp = new XMLHttpRequest();
+                }
+            }
+
+            createxmlHttpRequest();
+            xmlHttp.open("GET", './plugin.php?id=vaptcha&type=challenge&t=' + (new Date()).getTime());
+            xmlHttp.send(null);
+            xmlHttp.onreadystatechange = function(result) {
+                if ((xmlHttp.readyState === 4) && (xmlHttp.status === 200)) {
+                    var data = JSON.parse(xmlHttp.responseText);
+                    var options = {
+                        vid: data.vid,
+                        challenge: data.challenge,
+                        container: element,
+                        type: 'click',
+                        effect: "$type",
+                        https: $isHttps,
+                        color:"$style['color']",
+                        lang: 'zh-CN',
+                        ai: $isAi,
+                        outage: './plugin.php?id=vaptcha&type=downtime',
+                        success: function (token, challenge) {
+                            var inputs = form.getElementsByTagName('input');
+                            inputs['vaptcha_challenge'].value = challenge;
+                            inputs['vaptcha_token'].value = token;
+                            successCallback && successCallback();
+                        }
+                    }
+                    window.vaptcha(options, function (obj) { 
+                        var inputs = form.getElementsByTagName('input');
+                        inputs['vaptcha_challenge'].value = '';
+                        inputs['vaptcha_token'].value = '';
+                        obj.init();
+                    });             
+                }
+            }
+        }
+        var form = document.getElementById('vaptcha_$id'); 
+        var vaptcha = document.getElementById('vaptcha_container_$id'); 
+        $script
+    }
+    var script = document.getElementById('vaptcha_v_js');
+    if(script){ 
+        onload();
+    } else {
+        script = document.createElement('script');
+        script.src = '$Https://cdn.vaptcha.com/v.js';
+        script.id = 'vaptcha_v_js';
+        script.onload = script.onreadystatechange = function(){
+            if(!this.readyState || this.readyState=='loaded' || this.readyState=='complete'){ 
+                onload();
+                script.onload = script.onreadystatechange = null;
+            }
+        };
+        document.getElementsByTagName("head")[0].appendChild(script);
+    }
+    
+})()
+</script>
+<!--{/block}-->
+{eval return $return;}
+{eval }
+} 

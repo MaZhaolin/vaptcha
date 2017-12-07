@@ -1,0 +1,62 @@
+{eval 
+    function tpl_input_nodes($id, $style_key) {
+        global $_G;
+        $width = $_G['cache']['plugin']['vaptcha']['btn_width'];
+        $height = $_G['cache']['plugin']['vaptcha']['btn_height'];
+        $color = $_G['cache']['plugin']['vaptcha']['bg_color'];
+        $style = parse_style($_G['cache']['plugin']['vaptcha'][$style_key]);
+}
+<!--{block return}-->
+<div class="rfm">
+<table>
+    <tbody><tr>
+    <!--{if trim($style['label'])}-->
+    <th><label for="vaptcha_container_$id">$style['label']</label></th>
+    <!--{/if}-->
+    <td>
+        <div id="vaptcha_container_$id" >
+            <div class="vaptcha-init-main">
+                <div class="vaptcha-init-loading">
+                    <a><img src="https://cdn.vaptcha.com/vaptcha-loading.gif"/></a>
+                    <span class="vaptcha-text"><a href="https://www.vaptcha.com/" title="{lang vaptcha:loading_captcha}" target="_blank">{lang vaptcha:loading_captcha}</a>{lang vaptcha:loading_vaptcha}</span>
+                </div>
+            </div>
+        </div>
+    </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+<!--{/block}-->
+{eval return $return;}
+{eval }
+
+    function tpl_input_script($id, $isLogin = false) {
+
+}
+<!--{block return}--> 
+var vaptcha = document.getElementById('vaptcha_container_$id'); 
+initVaptcha(vaptcha, form); 
+
+<!--{if $isLogin}-->
+var loginbtn = form.parentElement.getElementsByTagName('button')['loginsubmit'];
+addEvent(loginbtn, 'click',function(){
+    var token = document.getElementsByTagName('input')['vaptcha_token'].value;
+    token && initVaptcha(vaptcha, form);
+})
+
+<!--{else}-->
+
+var registerbtn = document.getElementById('registerformsubmit');
+addEvent(registerbtn, 'click',function(){
+    var token = document.getElementsByTagName('input')['vaptcha_token'].value;
+    token && initVaptcha(vaptcha, form);
+})
+<!--{/if}-->
+
+<!--{/block}-->
+{eval return $return;}
+{eval }
+
+}

@@ -1,0 +1,135 @@
+<!--{template common/header}-->
+<script type="text/javascript" reload="1">
+    (function(){
+        function onload() {
+            var initVaptcha = function(element, form, type, successCallback){
+                var xmlHttp;
+                type = type || 'popup';
+                function createxmlHttpRequest() {
+                    if (window.ActiveXObject) {
+                        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    } else if (window.XMLHttpRequest) {
+                        xmlHttp = new XMLHttpRequest();
+                    }
+                }
+                createxmlHttpRequest();
+                xmlHttp.open("GET", './plugin.php?id=vaptcha&type=challenge&t=' + (new Date()).getTime());
+                xmlHttp.send(null);
+                xmlHttp.onreadystatechange = function(result) {
+                    if ((xmlHttp.readyState === 4) && (xmlHttp.status === 200)) {
+                        var data = JSON.parse(xmlHttp.responseText);
+                        var options = {
+                            vid: data.vid,
+                            challenge: data.challenge,
+                            container: element,
+                            type: type,
+                            lang: 'zh-CN',
+                            outage: './plugin.php?id=vaptcha&type=downtime',
+                            success: function (token, challenge) {
+                                var inputs = form.getElementsByTagName('input');
+                                inputs['vaptcha_challenge'].value = challenge;
+                                inputs['vaptcha_token'].value = token;
+                                setTimeout(function(){
+                                    successCallback && successCallback();
+                                }, 300);
+                            }
+                        }
+                        window.vaptcha(options, function (obj) {
+                            var inputs = form.getElementsByTagName('input');
+                            inputs['vaptcha_challenge'].value = '';
+                            inputs['vaptcha_token'].value = '';
+                            vaptcha_obj = obj;
+                            vaptcha_obj.init();
+                        });             
+                    }
+                }
+            }
+            var vaptchaContainer = document.getElementById('discuz-vp-container-{$pos}');
+            var form = document.getElementById('{$form}');
+            !form && (form = $form);
+            var inputs = form.getElementsByTagName('input');
+            !inputs['vaptcha_challenge'] && appendVaptchaForm();
+            if(vaptchaContainer) {
+                vaptchaContainer.style.display = 'block';
+                {$refresh} && initVaptcha(vaptchaContainer.getElementsByClassName('vp-content')[0], form, 'embed', function(){
+                   {$btn}.click();
+                    setTimeout(function() {
+                        vaptchaContainer.style.display = 'none'
+                    }, 800);
+                })
+                return ;
+            }
+            function createInput(name) {
+                var input = document.createElement('input');
+                input.setAttribute('name', name);
+                input.setAttribute('type', 'hidden');
+                return input;
+            }
+            function appendVaptchaForm() {
+                var challengeInput = createInput('vaptcha_challenge');
+                var tokenInput = createInput('vaptcha_token');
+                form.appendChild(challengeInput);
+                form.appendChild(tokenInput);
+            }
+            function addEvent(el, type, cb){
+                if (el.addEventListener) {
+                el.addEventListener(type, cb); 
+                } else if (el.attachEvent)  {
+                el.attachEvent(type, cb);
+                }
+            }
+            vaptchaContainer = document.createElement('div');
+            var html = '{lang vaptcha:please_finish_validation}<a href="https://www.vaptcha.com" target="_blank">{lang vaptcha:Provide_technical_support_by_vaptcha}</a>'
+            var vaptcha = document.createElement('div');
+            var vpHeader = document.createElement('div');
+            vpHeader.innerHTML = html;
+            vaptchaContainer.setAttribute('id', 'discuz-vp-container-{$pos}');
+            vaptchaContainer.className = 'discuz-vp-container'
+            vaptcha.className = 'vp-content';
+            vpHeader.className = 'vp-header';
+            vaptcha.innerHTML = '<div class="loading"><span style="animation-delay: -.32s"></span><span style="animation-delay: -.16s"></span><span></span></div>';
+            var stopPropagation  = function(e){
+                if(e && e.stopPropagation) { 
+                  e.stopPropagation(); 
+                } else { 
+                  window.event.cancelBubble = true; 
+                } 
+            }
+            addEvent(vaptcha, 'click', stopPropagation);
+            addEvent(vpHeader, 'click', stopPropagation);
+            document.body.appendChild(vaptchaContainer); 
+            vaptchaContainer.innerHTML = html;
+            vaptchaContainer.appendChild(vpHeader);
+            vaptchaContainer.appendChild(vaptcha);
+            var close = function() {
+                vaptchaContainer.style.display = 'none';
+            }
+            addEvent(vaptchaContainer, 'click', close);
+            initVaptcha(vaptcha, form, 'embed', function(){
+                {$btn}.click();
+                setTimeout(function() {
+                    close();
+                    vaptchaContainer.parentNode.removeChild(vaptchaContainer);
+                }, 800);
+            })
+        }
+
+        var script = document.getElementById('vaptcha_v_js');
+        if(script){
+            onload();
+        } else {
+            script = document.createElement('script');
+            script.src = '$Https://cdn.vaptcha.com/v.js';
+            script.id = 'vaptcha_v_js';
+            script.onload = script.onreadystatechange = function(){
+                if(!this.readyState || this.readyState=='loaded' || this.readyState=='complete'){
+                    onload();
+                    script.onload = script.onreadystatechange = null;
+            　　}
+            };
+            document.getElementsByTagName("head")[0].appendChild(script);
+        }
+    })()
+</script>
+
+<!--{template common/footer}-->

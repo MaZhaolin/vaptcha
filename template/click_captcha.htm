@@ -1,0 +1,47 @@
+{eval 
+    function tpl_click_captcha($form, $submit, $script, $ie = false) {
+
+}
+<!--{block return}-->
+var discuzForm = document.getElementById('$form');
+if(!discuzForm) {
+    vaptcha.parentNode.removeChild(vaptcha);
+    return ;
+}
+var submitButton = document.getElementById('$submit');
+var timer;
+if (!submitButton) {
+    timer = setTimeout(function() {
+        clearTimeout(timer);
+        createCaptcha();
+    },1);
+    return;
+}
+<!--{if $ie}-->
+//ie p tag can't use innerHTML attribute
+submitButton.parentNode.parentNode.insertBefore(form, submitButton.parentNode);
+vaptcha.style.marginTop = '10px';
+<!--{else}-->
+submitButton.parentNode.insertBefore(form, submitButton);
+<!--{/if}-->
+form.style.display = 'block';
+initVaptcha(vaptcha, form);
+$script
+
+<!--{/block}-->
+{eval return $return;}
+{eval }
+    function tpl_ajax_captcha($script = '') {
+}
+
+<!--{block return}-->
+$script;
+addEvent(submitButton, 'click', function(){
+    var token = document.getElementsByTagName('input')['vaptcha_token'].value;
+    token && initVaptcha(vaptcha, form);
+})
+<!--{/block}-->
+{eval return $return;}
+{eval }
+}
+
