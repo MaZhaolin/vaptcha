@@ -248,7 +248,11 @@ class Vaptcha
             $opts = array(
                 'http' => array(
                     'method' => 'POST',
-                    'header'=> "Content-type: application/x-www-form-urlencoded\r\n" . "Content-Length: " . strlen($data) . "\r\n",
+                    'header'=> "Content-type: application/
+
+
+
+                    x-www-form-urlencoded\r\n" . "Content-Length: " . strlen($data) . "\r\n",
                     'content' => $data,
                     'timeout' => 5*1000
                 ),
@@ -263,7 +267,7 @@ class Vaptcha
 
     private static function readContentFormGet($url)
     {
-        if (!function_exists('curl_exec')) {
+        if (function_exists('curl_exec')) {
             $ch = curl_init();  
             curl_setopt($ch, CURLOPT_URL, $url); 
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);  
