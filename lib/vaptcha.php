@@ -9,7 +9,7 @@ class Vaptcha
     private $lastCheckdownTime = 0;
     private $isDown = false;
 
-    //downtime pass signature
+    //宕机模式通过签证
     private static $passedSignatures = array();
 
     public function __construct($vid, $key)
@@ -20,9 +20,9 @@ class Vaptcha
     }
 
     /**
-     * get challenge
+     * 获取流水号
      *
-     * @param string $sceneId 
+     * @param string $sceneId 场景id
      * @return void
      */
     public function getChallenge($sceneId = "") 
@@ -70,11 +70,11 @@ class Vaptcha
     }
 
     /**
-     * second validate
+     * 二次验证
      *
-     * @param [string] $challenge 
-     * @param [sring] $token 
-     * @param string $sceneId 
+     * @param [string] $challenge 流水号
+     * @param [sring] $token 验证信息
+     * @param string $sceneId 场景ID 不填则为默认场景
      * @return void
      */
     public function validate($challenge, $token, $sceneId = "")
@@ -147,7 +147,8 @@ class Vaptcha
     }
 
     /**
-     *
+     * 宕机模式验证
+     * 
      * @param [int] $time1
      * @param [int] $time2
      * @param [string] $signature
@@ -248,11 +249,7 @@ class Vaptcha
             $opts = array(
                 'http' => array(
                     'method' => 'POST',
-                    'header'=> "Content-type: application/
-
-
-
-                    x-www-form-urlencoded\r\n" . "Content-Length: " . strlen($data) . "\r\n",
+                    'header'=> "Content-type: application/x-www-form-urlencoded\r\n" . "Content-Length: " . strlen($data) . "\r\n",
                     'content' => $data,
                     'timeout' => 5*1000
                 ),
@@ -276,7 +273,7 @@ class Vaptcha
             $errno = curl_errno($ch);
             $response = curl_exec($ch);
             curl_close($ch);
-            return $curl_errno > 0 ? false : $response;
+            return $errno > 0 ? false : $response;
         } else {
             $opts = array(
                 'http' => array(
@@ -290,10 +287,31 @@ class Vaptcha
         }
     }
 
-    private function HMACSHA1($key, $text)
+    private function HMACSHA1($key, $str)
     {
-        $result = hash_hmac('sha1', $text, $key, true);
-        $result = str_replace(array('/', '+', '='), '', base64_encode($result));
-        return $result;
+        $signature = "";  
+        if (function_exists('hash_hmac')) {
+            $signature = hash_hmac("sha1", $str, $key, true);
+        } else {
+            $blocksize = 64;  
+            $hashfunc = 'sha1';  
+            if (strlen($key) > $blocksize) {  
+                $key = pack('H*', $hashfunc($key));  
+            }  
+            $key = str_pad($key, $blocksize, chr(0x00));  
+            $ipad = str_repeat(chr(0x36), $blocksize);  
+            $opad = str_repeat(chr(0x5c), $blocksize);  
+            $signature = pack(  
+                    'H*', $hashfunc(  
+                            ($key ^ $opad) . pack(  
+                                    'H*', $hashfunc(  
+                                            ($key ^ $ipad) . $str  
+                                    )  
+                            )  
+                    )  
+            );  
+        }  
+        $signature = str_replace(array('/', '+', '='), '', base64_encode($signature));
+        return $signature;  
     }
 }

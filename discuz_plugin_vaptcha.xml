@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[vaptcha/]]></item>
 			<item id="copyright"><![CDATA[VAPTCHA]]></item>
-			<item id="version"><![CDATA[1.5.2]]></item>
+			<item id="version"><![CDATA[1.5.1]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[vaptcha]]></item>
@@ -70,7 +70,7 @@
 				<item id="description"><![CDATA[PC端按钮点击弹出效果的类型，如果网站有容器遮挡的情况建议使用弹出式。]]></item>
 				<item id="variable"><![CDATA[click_type]]></item>
 				<item id="type"><![CDATA[select]]></item>
-				<item id="value"><![CDATA[]]></item>
+				<item id="value"><![CDATA[2]]></item>
 				<item id="extra"><![CDATA[1=浮动式
 2=弹出式]]></item>
 			</item>
