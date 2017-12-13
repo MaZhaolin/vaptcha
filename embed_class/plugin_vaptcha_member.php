@@ -80,7 +80,7 @@ class plugin_vaptcha_member extends plugin_vaptcha{
     }
 
     function lostpasswd_code(){
-        // showmessage(lang('plugin/vaptcha', 'The second validation fails, please try refresh'));     
+        if(!$this->vaptcha_open || !$this->_cur_mod_is_valid()) return;
         
         if(submitcheck('lostpwsubmit')){
 			$challenge = $_GET['vaptcha_challenge'];

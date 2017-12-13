@@ -173,7 +173,9 @@ class plugin_vaptcha {
             case 'portalcp':
                 $mod = '10';
                 break;
-
+            case 'lostpasswd':
+                $mod = '11';
+                break;
             default:
                 return 1;
         }

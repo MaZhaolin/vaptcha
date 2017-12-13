@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[vaptcha/]]></item>
 			<item id="copyright"><![CDATA[VAPTCHA]]></item>
-			<item id="version"><![CDATA[1.5.1]]></item>
+			<item id="version"><![CDATA[1.5.3]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[vaptcha]]></item>
@@ -158,6 +158,7 @@
 				<item id="type"><![CDATA[selects]]></item>
 				<item id="extra"><![CDATA[1 = 注册模块
 2 = 登录模块
+11 = 找回密码
 3 = 发帖模块
 4 = 回帖模块
 5 = 编辑帖模块
@@ -275,8 +276,8 @@ color: #57ABFF;]]></item>
 				<item id="please_finish_validation"><![CDATA[请绘制轨迹完成人机验证]]></item>
 				<item id="Provide_technical_support_by_vaptcha"><![CDATA[由vaptcha提供技术支持]]></item>
 				<item id="man_machine_validation"><![CDATA[人机验证]]></item>
-				<item id="loading_captcha"><![CDATA[验证码]]></item>
-				<item id="loading_vaptcha"><![CDATA[启动中...]]></item>
+				<item id="loading_captcha"><![CDATA[CAPTCHA ]]></item>
+				<item id="loading_vaptcha"><![CDATA[is initialing...]]></item>
 			</item>
 		</item>
 	</item>
