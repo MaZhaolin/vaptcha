@@ -4,11 +4,12 @@
         if(!$id) $id = uniqid();
         global $_G;
         $isAi = $_G['cache']['plugin']['vaptcha']['is_ai'] ? 'true' : 'false';
-        $type = $_G['cache']['plugin']['vaptcha']['click_type'] == '1' ? 'float' : 'popup';
+        $type = $_G['cache']['plugin']['vaptcha']['click_type'] == '2' ? 'float' : 'popup';
         $isHttps = $_G['cache']['plugin']['vaptcha']['is_https'] ? 'true' : 'false';
         if ($isHttps == 'false' && $_SERVER['SERVER_PROTOCOL'] == 'HTTP/2.0') $isHttps = 'true';
         $Https = $isHttps == 'true' ? 'https' : 'http';
         $style = parse_style($_G['cache']['plugin']['vaptcha'][$style_key]);
+        $click_style = $_G['cache']['plugin']['vaptcha']['click_style'] == '2' ? 'light' : 'dark';
     }
 <!--{block return}-->
 <style>
@@ -99,6 +100,7 @@ $nodes
                         container: element,
                         type: 'click',
                         effect: "$type",
+                        style: '$click_style',
                         https: $isHttps,
                         color:"$style['color']",
                         lang: 'zh-CN',

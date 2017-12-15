@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[vaptcha/]]></item>
 			<item id="copyright"><![CDATA[VAPTCHA]]></item>
-			<item id="version"><![CDATA[1.5.3]]></item>
+			<item id="version"><![CDATA[1.5.5]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[vaptcha]]></item>
@@ -73,6 +73,16 @@
 				<item id="value"><![CDATA[2]]></item>
 				<item id="extra"><![CDATA[1=浮动式
 2=弹出式]]></item>
+			</item>
+			<item id="17">
+				<item id="displayorder"><![CDATA[2]]></item>
+				<item id="title"><![CDATA[插件风格]]></item>
+				<item id="description"><![CDATA[请根据自己网站色调搭配风格]]></item>
+				<item id="variable"><![CDATA[click_style]]></item>
+				<item id="type"><![CDATA[select]]></item>
+				<item id="value"><![CDATA[1]]></item>
+				<item id="extra"><![CDATA[1=深色
+2=浅色]]></item>
 			</item>
 			<item id="3">
 				<item id="displayorder"><![CDATA[3]]></item>
@@ -183,8 +193,8 @@
 			</item>
 			<item id="10">
 				<item id="displayorder"><![CDATA[10]]></item>
-				<item id="title"><![CDATA[登录模块按钮风格]]></item>
-				<item id="description"><![CDATA[请根据需要自定义按钮风格。注意：宽度不低于200px,高度36~46px]]></item>
+				<item id="title"><![CDATA[登录模块按钮样式]]></item>
+				<item id="description"><![CDATA[请根据需要自定义按钮样式。注意：宽度不低于200px,高度36~46px，color为按钮颜色]]></item>
 				<item id="variable"><![CDATA[login_style]]></item>
 				<item id="type"><![CDATA[textarea]]></item>
 				<item id="value"><![CDATA[label: 人机验证:;
@@ -195,8 +205,8 @@ color: #57ABFF]]></item>
 			</item>
 			<item id="11">
 				<item id="displayorder"><![CDATA[11]]></item>
-				<item id="title"><![CDATA[注册模块按钮风格]]></item>
-				<item id="description"><![CDATA[如此模块所示，label选项可以使用HTML标签，为空则不显示]]></item>
+				<item id="title"><![CDATA[注册模块按钮样式]]></item>
+				<item id="description"><![CDATA[如此模块所示，label选项可以使用HTML标签，为空则不显示，此处span的内容为红色星号]]></item>
 				<item id="variable"><![CDATA[register_style]]></item>
 				<item id="type"><![CDATA[textarea]]></item>
 				<item id="value"><![CDATA[label: <span class="rq">*</span>人机验证:;
@@ -207,7 +217,7 @@ color: #57ABFF;]]></item>
 			</item>
 			<item id="12">
 				<item id="displayorder"><![CDATA[12]]></item>
-				<item id="title"><![CDATA[发帖/投票 模块按钮风格 ...]]></item>
+				<item id="title"><![CDATA[发帖/投票 模块按钮样式]]></item>
 				<item id="description"><![CDATA[]]></item>
 				<item id="variable"><![CDATA[post_style]]></item>
 				<item id="type"><![CDATA[textarea]]></item>
@@ -219,7 +229,7 @@ color: #57ABFF;]]></item>
 			</item>
 			<item id="13">
 				<item id="displayorder"><![CDATA[13]]></item>
-				<item id="title"><![CDATA[评论模块按钮风格]]></item>
+				<item id="title"><![CDATA[评论模块按钮样式]]></item>
 				<item id="description"><![CDATA[]]></item>
 				<item id="variable"><![CDATA[comment_style]]></item>
 				<item id="type"><![CDATA[textarea]]></item>
@@ -231,7 +241,7 @@ color: #57ABFF;]]></item>
 			</item>
 			<item id="14">
 				<item id="displayorder"><![CDATA[13]]></item>
-				<item id="title"><![CDATA[日志模块按钮风格]]></item>
+				<item id="title"><![CDATA[日志模块按钮样式]]></item>
 				<item id="description"><![CDATA[]]></item>
 				<item id="variable"><![CDATA[blog_style]]></item>
 				<item id="type"><![CDATA[textarea]]></item>
@@ -243,7 +253,7 @@ color: #57ABFF;]]></item>
 			</item>
 			<item id="15">
 				<item id="displayorder"><![CDATA[14]]></item>
-				<item id="title"><![CDATA[留言模块按钮风格]]></item>
+				<item id="title"><![CDATA[留言模块按钮样式]]></item>
 				<item id="description"><![CDATA[]]></item>
 				<item id="variable"><![CDATA[space_style]]></item>
 				<item id="type"><![CDATA[textarea]]></item>
@@ -255,7 +265,7 @@ color: #57ABFF;]]></item>
 			</item>
 			<item id="16">
 				<item id="displayorder"><![CDATA[15]]></item>
-				<item id="title"><![CDATA[充值模块按钮风格]]></item>
+				<item id="title"><![CDATA[充值模块按钮样式]]></item>
 				<item id="description"><![CDATA[]]></item>
 				<item id="variable"><![CDATA[credit_style]]></item>
 				<item id="type"><![CDATA[textarea]]></item>
