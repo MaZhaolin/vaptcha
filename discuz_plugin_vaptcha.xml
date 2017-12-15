@@ -8,7 +8,7 @@
 		<item id="plugin">
 			<item id="available"><![CDATA[1]]></item>
 			<item id="adminid"><![CDATA[1]]></item>
-			<item id="name"><![CDATA[VAPTCHA]]></item>
+			<item id="name"><![CDATA[VAPTCHA手势验证码]]></item>
 			<item id="identifier"><![CDATA[vaptcha]]></item>
 			<item id="description"><![CDATA[VAPTCHA是”Variation Analysis - based Public Turing Test to Tell Computers and Humans Apart ”的简称，也叫手势验证。一种通过用户鼠标手势即可完成人机验证的图灵测试程序。VAPTCHA更加简单和安全，是目前传统验证码的最佳替代方案。VAPTCHA不仅大幅节省了用户在使用互联网服务时在人机验证上面的耗时，平均通过时间不超过1秒，同时也是目前世界上最不可能被破解的验证系统。]]></item>
 			<item id="datatables"><![CDATA[]]></item>
