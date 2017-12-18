@@ -30,7 +30,7 @@ class plugin_vaptcha_home extends plugin_vaptcha
 	public function space_wall_face_extra() {
 		global $_G;
 		if(!$_G['uid'] || !$this->_cur_mod_is_valid()) return;
-		return $this->get_captcha('space_style', 'quickcommentform_1', 'commentsubmit_btn', tpl_ajax_captcha(), true);
+		return $this->get_captcha('space_style', 'commentsubmit_btn', 'commentsubmit_btn', tpl_ajax_captcha(), true);
 	}
 
 	 //handle validation
