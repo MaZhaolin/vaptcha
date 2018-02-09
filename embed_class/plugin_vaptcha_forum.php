@@ -15,7 +15,18 @@ class plugin_vaptcha_forum extends plugin_vaptcha {
 		if(!$_G['uid'] || !$this->_cur_mod_is_valid()) return;
 		$script = <<<JS
 		vaptcha.style.margin = "10px 0";
-		document.getElementById('post_extra_tb').style.zIndex = 0;
+        document.getElementById('post_extra_tb').style.zIndex = 0;
+        addEvent(document.getElementById('postsubmit'), 'click', function(e){
+            if (!_vaptcha.isPass) {
+                _vaptcha.notify();
+                if(e && e.stopPropagation) { 
+                    e.stopPropagation(); 
+                    e.preventDefault();
+                } else {
+                    window.event.cancelBubble = true; 
+                } 
+            }
+        })
 JS;
 		return $this->get_captcha('post_style', 'postform', 'postsubmit', $script);
 	}
@@ -28,7 +39,7 @@ JS;
 
 	function post_infloat_middle_output() {
 		$script = <<<JS
-		initVaptcha(vaptcha, form, 'float');
+		var _vaptcha = initVaptcha(vaptcha, form, 'float');
 		vaptcha.style.marginLeft = '10px';
 JS;
 		return $this->get_captcha('comment_style', 'postform', 'postsubmit',  tpl_ajax_captcha($script), true);
@@ -38,16 +49,21 @@ JS;
 		if (!$this->has_authority() || !$this->_cur_mod_is_valid() || !$this->vaptcha_open) {
             return;
 		}
-
-	/*	if ($_GET['action'] == 'reply' && $_GET['inajax'] == '1' && $_GET['handlekey'] != 'reply' && $_GET['infloat'] != 'yes') {
-			
-			return '<root>'.$this->get_embed_captcha().'';
-		}*/
-
         global $_G;
-		if (submitcheck('topicsubmit') || submitcheck('replysubmit') || submitcheck('editsubmit')) {
-			$challenge = $_GET['vaptcha_challenge'];
-			$token = $_GET['vaptcha_token'];
+
+        $challenge = $_GET['vaptcha_challenge'];
+        $token = $_GET['vaptcha_token'];
+
+		if ($_GET['action'] == 'reply' && $_GET['inajax'] == '1' && $_GET['handlekey'] == 'qreply_'.$_GET['tid'] && $_GET['replysubmit'] == 'yes') {
+			if (!$token) {
+                return $this->get_embed_captcha('postform_'.$_GET['tid'], 'document.getElementById("postsubmit")');
+            }
+            $validatePass = $this->vaptcha->Validate($challenge, $token);
+            if (!$validatePass) {
+                return $this->get_embed_captcha('postform_'.$_GET['tid'], 'document.getElementById("postsubmit")', true);                
+            }
+
+		} else if (submitcheck('topicsubmit') || submitcheck('replysubmit') || submitcheck('editsubmit')) {
 			if(!$token) {
 				if ($_GET['handlekey'] == 'vfastpost') {
 					$this->get_embed_captcha('vfastpostform', 'document.getElementById("vreplysubmit")');
@@ -55,19 +71,18 @@ JS;
 				}
 				showmessage(lang('plugin/vaptcha', 'Please click the verify button below to man-machine validation'));
 			}
-            $validatePass = $this->vaptcha->Validate($challenge, $token);
+            $scene = $_GET['action'] == 'newthread' ? '03' : '';
+            $validatePass = $this->vaptcha->Validate($challenge, $token, $scene);
             if (!$validatePass) {
 				if ($_GET['handlekey'] == 'vfastpost') {
 					$this->get_embed_captcha('vfastpostform', 'document.getElementById("vreplysubmit")', true);
 					return;
 				}
 				showmessage(lang('plugin/vaptcha', 'The second validation fails, please try refresh'));		
-            } else {
-            	$post_count = $_G['cookie']['pc_size_c'];
-	            $post_count = ($post_count + 1);
-	            dsetcookie('pc_size_c', $post_count);
             }
         }
+
+
         
 	}
 }

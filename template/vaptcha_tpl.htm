@@ -4,18 +4,20 @@
         if(!$id) $id = uniqid();
         global $_G;
         $isAi = $_G['cache']['plugin']['vaptcha']['is_ai'] ? 'true' : 'false';
-        $type = $_G['cache']['plugin']['vaptcha']['click_type'] == '2' ? 'float' : 'popup';
-        $isHttps = $_G['cache']['plugin']['vaptcha']['is_https'] ? 'true' : 'false';
+        $isHttps = Helper::config('https') ? 'true' : 'false';
         if ($isHttps == 'false' && $_SERVER['SERVER_PROTOCOL'] == 'HTTP/2.0') $isHttps = 'true';
         $Https = $isHttps == 'true' ? 'https' : 'http';
-        $style = parse_style($_G['cache']['plugin']['vaptcha'][$style_key]);
-        $click_style = $_G['cache']['plugin']['vaptcha']['click_style'] == '2' ? 'light' : 'dark';
+        $style = Helper::getStyle();
+        $click_style = Helper::config('style');
+        $scene = Helper::getScene();
     }
 <!--{block return}-->
 <style>
+    #vaptcha_$id {
+        padding-bottom: 10px
+    }
     #vaptcha_container_$id {
-        margin-bottom: 10px;
-        $style['style']
+        $style['css']
     }
     .vaptcha-init-main{
         display: table;
@@ -70,7 +72,7 @@
 $nodes
 <script type='text/javascript'>
 (function () {
-    console.log('vaptcha version 1.5.6')
+    console.log('vaptcha version 2.1.0')
     function addEvent(el, type, cb){
         if (el.addEventListener) {
         el.addEventListener(type, cb); 
@@ -80,6 +82,29 @@ $nodes
     }
     function onload() {
         var initVaptcha = function(element, form, type, successCallback){
+            var _v = new function () {
+                this.isPass = false;
+                this.vaptcha = null;
+                this.msg = null;
+                this.refresh = function () {
+                    if (this.isPass) {
+                        this.vaptcha.destroy();
+                        return initVaptcha(element, form, type, successCallback);
+                    }
+                    return this;
+                };
+                this.notify = function () {
+                    if (this.msg) {
+                        this.msg.style.display = 'block';
+                    } else {
+                        var msg = document.createElement('span');
+                        msg.className = 'rq';
+                        msg.innerHTML = '&#35831;&#36827;&#34892;&#20154;&#26426;&#39564;&#35777;';
+                        this.msg = msg;
+                        element.parentNode.appendChild(msg);
+                    }
+                }
+            }()
             var xmlHttp;
             function createxmlHttpRequest() {
                 if (window.ActiveXObject) {
@@ -88,9 +113,8 @@ $nodes
                     xmlHttp = new XMLHttpRequest();
                 }
             }
-
             createxmlHttpRequest();
-            xmlHttp.open("GET", './plugin.php?id=vaptcha&type=challenge&t=' + (new Date()).getTime());
+            xmlHttp.open("GET", './plugin.php?id=vaptcha&type=challenge&scene={$scene}&t=' + (new Date()).getTime());
             xmlHttp.send(null);
             xmlHttp.onreadystatechange = function(result) {
                 if ((xmlHttp.readyState === 4) && (xmlHttp.status === 200)) {
@@ -100,14 +124,16 @@ $nodes
                         challenge: data.challenge,
                         container: element,
                         type: 'click',
-                        effect: "$type",
-                        style: '$click_style',
+                        effect: "$style['type']",
+                        style: "$style['style']",
                         https: $isHttps,
                         color:"$style['color']",
                         lang: 'zh-CN',
                         ai: $isAi,
                         outage: './plugin.php?id=vaptcha&type=downtime',
                         success: function (token, challenge) {
+                            _v.isPass = true;
+                            _v.msg && (_v.msg.style.display = 'none');
                             var inputs = form.getElementsByTagName('input');
                             inputs['vaptcha_challenge'].value = challenge;
                             inputs['vaptcha_token'].value = token;
@@ -119,9 +145,11 @@ $nodes
                         inputs['vaptcha_challenge'].value = '';
                         inputs['vaptcha_token'].value = '';
                         obj.init();
+                        _v.vaptcha = obj;
                     });             
                 }
             }
+            return _v;
         }
         var form = document.getElementById('vaptcha_$id'); 
         var vaptcha = document.getElementById('vaptcha_container_$id'); 
@@ -132,7 +160,7 @@ $nodes
         onload();
     } else {
         script = document.createElement('script');
-        script.src = '$Https://cdn.vaptcha.com/v.js';
+        script.src = 'https://cdn.vaptcha.com/v.js';
         script.id = 'vaptcha_v_js';
         script.onload = script.onreadystatechange = function(){
             if(!this.readyState || this.readyState=='loaded' || this.readyState=='complete'){ 

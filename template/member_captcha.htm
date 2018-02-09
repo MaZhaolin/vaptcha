@@ -4,14 +4,19 @@
         $width = $_G['cache']['plugin']['vaptcha']['btn_width'];
         $height = $_G['cache']['plugin']['vaptcha']['btn_height'];
         $color = $_G['cache']['plugin']['vaptcha']['bg_color'];
-        $style = parse_style($_G['cache']['plugin']['vaptcha'][$style_key]);
+        $style =  Helper::getStyle();
 }
 <!--{block return}-->
 <div class="rfm">
 <table>
     <tbody><tr>
     <!--{if trim($style['label'])}-->
-    <th><label for="vaptcha_container_$id">$style['label']</label></th>
+    <th><label for="vaptcha_container_$id">
+        <!--{if $style['required']}-->
+            <span class="rq">*</span>
+        <!--{/if}-->        
+            $style['label']
+    </label></th>
     <!--{/if}-->
     <td>
         <div id="vaptcha_container_$id" >
@@ -37,21 +42,19 @@
 }
 <!--{block return}--> 
 var vaptcha = document.getElementById('vaptcha_container_$id'); 
-initVaptcha(vaptcha, form); 
+_vaptcha = initVaptcha(vaptcha, form); 
 
 <!--{if $isLogin}-->
 var loginbtn = form.parentElement.getElementsByTagName('button')['loginsubmit'];
 addEvent(loginbtn, 'click',function(){
-    var token = document.getElementsByTagName('input')['vaptcha_token'].value;
-    token && initVaptcha(vaptcha, form);
+    _vaptcha.refresh();
 })
 
 <!--{else}-->
 
 var registerbtn = document.getElementById('registerformsubmit');
 addEvent(registerbtn, 'click',function(){
-    var token = document.getElementsByTagName('input')['vaptcha_token'].value;
-    token && initVaptcha(vaptcha, form);
+    _vaptcha = _vaptcha.refresh();
 })
 <!--{/if}-->
 

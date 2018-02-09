@@ -4,7 +4,7 @@
 	<item id="Version"><![CDATA[X2.5,X3,X3.1,X3.2,X3.3,X3.4]]></item>
 	<item id="Time"><![CDATA[2017-10-20 09:44]]></item>
 	<item id="From"><![CDATA[Discuz! Board (https://www.vaptcha.com)]]></item>
-	<item id="Data">
+    <item id="Data">
 		<item id="plugin">
 			<item id="available"><![CDATA[1]]></item>
 			<item id="adminid"><![CDATA[1]]></item>
@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[vaptcha/]]></item>
 			<item id="copyright"><![CDATA[VAPTCHA]]></item>
-			<item id="version"><![CDATA[1.5.6]]></item>
+			<item id="version"><![CDATA[2.1.0]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[vaptcha]]></item>
@@ -42,10 +42,23 @@
 					<item id="navsubname"><![CDATA[]]></item>
 					<item id="navsuburl"><![CDATA[]]></item>
 				</item>
+				<item id="2">
+					<item id="name"><![CDATA[setting]]></item>
+					<item id="param"><![CDATA[]]></item>
+					<item id="menu"><![CDATA[设置]]></item>
+					<item id="url"><![CDATA[]]></item>
+					<item id="type"><![CDATA[3]]></item>
+					<item id="adminid"><![CDATA[0]]></item>
+					<item id="displayorder"><![CDATA[0]]></item>
+					<item id="navtitle"><![CDATA[]]></item>
+					<item id="navicon"><![CDATA[]]></item>
+					<item id="navsubname"><![CDATA[]]></item>
+					<item id="navsuburl"><![CDATA[]]></item>
+				</item>
 			</item>
 		</item>
 		<item id="version"><![CDATA[X2.5,X3,X3.1,X3.2,X3.3,X3.4]]></item>
-		<item id="var">
+        <item id="var">
 			<item id="0">
 				<item id="displayorder"><![CDATA[0]]></item>
 				<item id="title"><![CDATA[验证单元 Vid]]></item>
@@ -282,11 +295,12 @@ color: #57ABFF;]]></item>
 				<item id="The second validation fails, please try refresh"><![CDATA[验证失效，请重新验证]]></item>
 				<item id="please_finish_validation"><![CDATA[请绘制轨迹完成人机验证]]></item>
 				<item id="Provide_technical_support_by_vaptcha"><![CDATA[由vaptcha提供技术支持]]></item>
+				<item id="man_machine_validation"><![CDATA[人机验证:]]></item>
 			</item>
 			<item id="templatelang">
 				<item id="please_finish_validation"><![CDATA[请绘制轨迹完成人机验证]]></item>
 				<item id="Provide_technical_support_by_vaptcha"><![CDATA[由vaptcha提供技术支持]]></item>
-				<item id="man_machine_validation"><![CDATA[人机验证]]></item>
+				<item id="man_machine_validation"><![CDATA[人机验证:]]></item>
 				<item id="loading_captcha"><![CDATA[CAPTCHA ]]></item>
 				<item id="loading_vaptcha"><![CDATA[is initialing...]]></item>
 			</item>

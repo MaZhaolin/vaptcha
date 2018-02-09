@@ -10,6 +10,7 @@ function get_captcha($form,$button, $script = '') {
     $Https = $isHttps == 'true' ? 'https' : 'http';
     $please_finish_validation = lang('plugin/vaptcha',  'please_finish_validation');
     $Provide_technical_support_by_vaptcha = lang('plugin/vaptcha',  'Provide_technical_support_by_vaptcha');
+    $scene = Helper::getScene();
 $result = <<<HTML
 <style id="dzVaptcha">
     #discuz-vp-container{
@@ -75,7 +76,7 @@ $result = <<<HTML
 <script type="text/javascript">
     (function() {
         var v = document.createElement('script');
-        v.src = '$Https://cdn.vaptcha.com/v.js';
+        v.src = 'https://cdn.vaptcha.com/v.js';
         v.onload = function() {
             document.head.appendChild(document.getElementsByTagName('style')['dzVaptcha']);
             var initVaptcha = function(element, form, type, successCallback){
@@ -89,7 +90,7 @@ $result = <<<HTML
                     }
                 }
                 createxmlHttpRequest();
-                xmlHttp.open("GET", './plugin.php?id=vaptcha&type=challenge&t=' + (new Date()).getTime());
+                xmlHttp.open("GET", './plugin.php?id=vaptcha&type=challenge&scene={$scene}&t=' + (new Date()).getTime());
                 xmlHttp.send(null);
                 xmlHttp.onreadystatechange = function(result) {
                     if ((xmlHttp.readyState === 4) && (xmlHttp.status === 200)) {

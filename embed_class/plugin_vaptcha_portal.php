@@ -7,13 +7,25 @@ if(!defined('IN_DISCUZ')) {
 class plugin_vaptcha_portal extends plugin_vaptcha {
 	function portalcp_bottom() {
 		if (!$this->has_authority() || !$this->_cur_mod_is_valid() || !$this->vaptcha_open) return;
-
 		return $this->get_captcha('post_style', 'articleform', 'issuance');
 	}
 
 	function view_article_op_extra() {
-		if (!$this->has_authority() || !$this->_cur_mod_is_valid() || !$this->vaptcha_open) return;
-		return $this->get_captcha('comment_style', 'cform', 'commentsubmit_btn', '', true);
+        if (!$this->has_authority() || !$this->_cur_mod_is_valid() || !$this->vaptcha_open) return;
+        $script = <<<JS
+        addEvent(document.getElementById('commentsubmit_btn'), 'click', function(e){
+            if (!_vaptcha.isPass) {
+                _vaptcha.notify();
+                if(e && e.stopPropagation) { 
+                    e.stopPropagation(); 
+                    e.preventDefault();
+                } else {
+                    window.event.cancelBubble = true; 
+                } 
+            }
+        })
+JS;
+		return $this->get_captcha('comment_style', 'cform', 'commentsubmit_btn', $script, true);
 	}
 
 	function portalcp_reode() {

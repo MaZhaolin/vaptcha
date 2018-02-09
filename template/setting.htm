@@ -1,0 +1,147 @@
+<link rel="stylesheet" href="{$static_path}/css/colpick.css" type="text/css" />
+<link rel="stylesheet" href="{$static_path}/css/set.css" type="text/css" />
+<script src="{$static_path}/js/jquery.min.js"></script>
+<script src="{$static_path}/js/colpick.js"></script>
+<body>
+   <form class="dz-set" method="POST" id='app' v-cloak >
+       <div class="content">
+            <div class="basic-setup">
+                <div class="title">
+                    <h2>&#22522;&#26412;&#35774;&#32622;</h2>
+                </div>
+                <p class="pad">&#39564;&#35777;&#21333;&#20803;&#37197;&#32622;</p>
+                <div class="item">
+                    <label for="id">ID:</label>
+                    <input class="form-control" type="text" v-model="config.vid" id="id"/>
+                </div>
+                <div class="item">
+                    <label for="key">KEY:</label>
+                    <input class="form-control" type="text" v-model="config.key" id="key"/>
+                </div>
+                <div class="right">
+                    <p>&#24314;&#35758;&#21040;<a href="https://www.vaptcha.com/" target="_blank">&#86;&#65;&#80;&#84;&#67;&#72;&#65;&#23448;&#32593;</a>&#27880;&#20876;&#24182;&#20813;&#36153;&#33719;&#21462;&#31169;&#26377;&#75;&#69;&#89;&#21450;&#73;&#68;&#65292;&#19981;&#20165;&#21487;&#20197;&#26597;&#30475;&#23454;&#26102;&#32479;&#35745;&#32780;&#19988;&#26356;&#21152;&#23433;&#20840;</p>
+                </div>
+				<p  class="pad" style="clear:both">&#36873;&#25321;&#38656;&#35201;&#39564;&#35777;&#30340;&#27169;&#22359;</p>
+                <div class="item" v-for="(module, key) in modules" :key="key">
+                    <input type="checkbox" v-model="config.enableModules" :id="key" :value="key + 1"> 
+                    <label :for="key">{{modules[key]}}</label>
+                </div>
+            </div>
+            <div class="advanced-setting">
+                <div class="title">
+                    <h2>&#39640;&#32423;&#35774;&#32622;</h2>
+                </div>
+                <div class="item">
+                    <input type="checkbox" v-model="config.pc" id="web"> 
+                    <label for="web">&#21551;&#29992;&#87;&#69;&#66;&#31471;</label>
+                </div>
+                <div class="item">
+                    <input type="checkbox" v-model="config.mobile" id="move"> 
+                    <label for="move">&#21551;&#29992;&#31227;&#21160;&#31471;</label>
+                </div>
+                <div class="item">
+                    <input type="checkbox" v-model="config.https" id="https"> 
+                    <label for="https">&#24378;&#21046;&#21551;&#29992;https</label>
+                </div>
+            </div>
+            <div class="btn-setting">
+                <div class="title">
+                    <h2>&#25353;&#38062;&#26679;&#24335;&#35774;&#32622;<span class="right" @click="setDefaultConfig">&#24674;&#22797;&#40664;&#35748;&#35774;&#32622;</span></h2>
+                </div>
+                <div v-for="(module, key) in config.modules" :key="key" class="model" :class='[key]' >
+                    <div class="model-item">
+                        <span class="model-intro">{{modules[key]}}&#27169;&#22359;</span>
+                        <div class="group-set">
+                            <label for="vaptchaWidth">width(px)</label>
+                            <input class="form-control minw" type="text" v-model="module.width" @blur="limitNumber(module, 'width', 200)"/>
+                        </div>
+                        <div class="group-set">
+                            <label for="vaptchaHeight">height(px)</label>
+                            <input class="form-control minw" type="text" v-model="module.height" @blur="limitNumber(module, 'height', 36, 46)"/>
+                        </div>
+                        <div class="group-set">
+                            <label>color</label>
+                            <div class="example-ex">
+                                <span># </span>
+                                <input type="text" id="picker" class="picker" v-model="module.color">
+                            </div>
+                        </div>
+                        <div class="group-set">
+                            <label for="vaptchaWidth">style</label>
+                            <select class="select-style" v-model="module.style">
+                                <option value="dark">Widows</option>
+                                <option value="light">IOS</option>
+                            </select>
+                        </div>
+                        <div class="group-set">
+                            <label for="vaptchaWidth">&#26174;&#31034;&#31867;&#22411;</label>
+                            <select class="select-style" v-model="module.type">
+                                <option value="float">&#28014;&#21160;&#24335;</option>
+                                <option value="popup">&#24377;&#20986;&#24335;</option>
+                            </select>
+                        </div>
+                        <div class="group-set group-checkbox" :style="{visibility: key < 2 ? 'visible' : 'hidden'}">
+                            <input type="checkbox" v-model="module.required" :checked="module.required">
+                            <span class="check-mark">*</span>
+                        </div>
+                        <div class="group-set" :style="{visibility: key < 2 ? 'visible' : 'hidden'}">
+                            <label for="vaptchaLabel">label</label>
+                            <input class="form-control" type="text" v-model="module.label" id="vaptchaLabel" />
+                        </div>
+                    </div>
+                    <div class="model-preview">
+                        <div class="preview-intro">
+                            <span class="model-intro">
+                                <sup class="check-mark" v-if="module.required">*</sup>{{module.label}}</span>
+                        </div>
+                        <div class="preview-btn">
+                            <div v-show="module.style == 'dark'" :style="{width: module.width + 'px', height: module.height + 'px'}" class="vp-basic-btn vp-dark-btn vp-default-btn vp-waves">
+                                <div class="vp-basic-cont ">
+                                    <div class="vp-shield vp-vertical">
+                                        <span class="vp-vertical-cont">
+                                            <i></i>
+                                        </span>
+                                    </div>
+                                    <a class="vp-about vp-vertical" href="https://www.vaptcha.com/" target="_blank" title="&#20102;&#35299;&#86;&#65;&#80;&#84;&#67;&#72;&#65;">
+                                        <span class="vp-vertical-cont">
+                                            <i></i>
+                                        </span>
+                                    </a>
+                                    <div :style="{lineHeight: module.height + 'px'}" class="vp-tip">&#21333;&#20987;&#36827;&#34892;&#20154;&#26426;&#39564;&#35777;</div>
+                                </div>
+                            </div>
+                            <div v-show="module.style == 'light'" :style="{width: module.width + 'px', height: module.height + 'px'}"  class="vp-basic-btn vp-light-btn vp-default-btn" style="display: none;">
+                                <div :style="{top: (module.height - 46) / 2 + 'px'}"  class="vp-basic-cont ">
+                                    <div class="vp-basic-bar"></div>
+                                    <div class="vp-shield vp-vertical">
+                                        <span class="vp-vertical-cont">
+                                        </span>
+                                    </div>
+                                    <a class="vp-about " href="https://www.vaptcha.com/" target="_blank" title="&#20102;&#35299;&#86;&#65;&#80;&#84;&#67;&#72;&#65;">
+                                        <span class="vp-about-img">
+                                        </span>
+                                    </a>
+                                    <div class="vp-tip">&#21333;&#20987;&#36827;&#34892;&#20154;&#26426;&#39564;&#35777;</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+		<button class="vp-btn" @click.prevent="submitSettig">&#20445;&#23384;&#35774;&#32622;</button>      
+   </form>
+   <form method="POST" id="configForm">
+   </form>
+   <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+   <script src="{$static_path}/js/set.js"></script>   
+<script>
+    var config = JSON.parse('{eval echo json_encode($config)}');
+    init(config);
+    $.ajaxSetup({
+        beforeSend: function(xhr) {
+            this.url = '{$site_url}' + this.url;
+        }
+    })
+</script>
+</body>

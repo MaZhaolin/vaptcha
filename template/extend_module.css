@@ -1,20 +1,31 @@
 /** member,home,forum,portal,group, misc **/
 .discuz-vp-container{
     position: fixed;
-    z-index:99999;
+    z-index: 1000;
     left: 0;
     right: 0;
     bottom: 0;
     top: 0;
-    background: rgba(0, 0, 0, 0.3);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#7f000000,endColorstr=#7f000000);
+}
+.discuz-vp-container .vp-mask{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: #000000;
+    opacity: 0.5;
+    -webkit-opacity: 0.5;
+    -moz-opacity: 0.5;  
+    filter:alpha(opacity=50);
 }
 .discuz-vp-container .vp-content, .discuz-vp-container .vp-header{
+    position: relative;
     width: 400px;
     margin: 0 auto;
 }
 .discuz-vp-container .vp-header{
-    margin-top: 150px;
+    /* margin-top: 15%; */
     line-height: 30px;
     background: #212B39;
     padding-left: 10px;

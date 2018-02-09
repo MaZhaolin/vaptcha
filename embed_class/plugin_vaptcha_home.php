@@ -16,8 +16,21 @@ class plugin_vaptcha_home extends plugin_vaptcha
 	//blog
 	function spacecp_blog_bottom() {
 		global $_G;
-		if(!$_G['uid'] || !$this->_cur_mod_is_valid()) return;
-		return $this->get_captcha('blog_style', 'ttHtmlEditor', 'issuance');
+        if(!$_G['uid'] || !$this->_cur_mod_is_valid()) return;
+        $script = <<<JS
+        addEvent(document.getElementById('issuance'), 'click', function(e){
+            if (!_vaptcha.isPass) {
+                _vaptcha.notify();
+                if(e && e.stopPropagation) { 
+                    e.stopPropagation(); 
+                    e.preventDefault();
+                } else {
+                    window.event.cancelBubble = true; 
+                } 
+            }
+        })
+JS;
+		return $this->get_captcha('blog_style', 'ttHtmlEditor', 'issuance', $script);
 	}
 
 	//comment
@@ -35,7 +48,7 @@ class plugin_vaptcha_home extends plugin_vaptcha
 
 	 //handle validation
     public function spacecp_follow_recode(){
-    	if( ! $this->has_authority() || !$this->_cur_mod_is_valid() || !$this->vaptcha_open)return;
+    	if( ! $this->has_authority() || !$this->_cur_mod_is_valid() || !$this->vaptcha_open || $_GET['op'] == 'delete')return;
         $challenge = $_GET['vaptcha_challenge'];
         $token = $_GET['vaptcha_token'];
 
@@ -62,6 +75,7 @@ class plugin_vaptcha_home extends plugin_vaptcha
             }
         }
     }
+
     public function spacecp_blog_recode(){
     	$this->spacecp_recode();
     }
@@ -93,8 +107,13 @@ class plugin_vaptcha_home extends plugin_vaptcha
             }
         }
 
+
+
 		if(submitcheck('topicsubmit') || submitcheck('blogsubmit') || submitcheck('commentsubmit')) {
 				if(!$token) {
+                    if ($_REQUEST['handlekey'] == 'c_'.$_REQUEST['cid'].'_reply') {
+                        return $this->get_embed_captcha('replycommentform_'.$_REQUEST['cid'], 'document.getElementById("commentsubmit_btn")');
+                    }
 	                showmessage(lang('plugin/vaptcha', 'Please click the verify button below to man-machine validation')); 
 	            }
 	            $validatePass = $this->vaptcha->Validate($challenge, $token);

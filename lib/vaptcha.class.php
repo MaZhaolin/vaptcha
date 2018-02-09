@@ -14,7 +14,6 @@ class Vaptcha
 
     public function __construct($vid, $key)
     {
-        date_default_timezone_set("UTC");
         $this->vid = $vid;
         $this->key = $key;
     }
@@ -244,7 +243,7 @@ class Vaptcha
             $errno = curl_errno($ch);
             $response = curl_exec($ch);
             curl_close($ch);
-            return $curl_errno > 0 ? 'error' : $response;
+            return $errno > 0 ? 'error' : $response;
         } else {
             $opts = array(
                 'http' => array(

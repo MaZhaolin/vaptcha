@@ -13,7 +13,7 @@
                     }
                 }
                 createxmlHttpRequest();
-                xmlHttp.open("GET", './plugin.php?id=vaptcha&type=challenge&t=' + (new Date()).getTime());
+                xmlHttp.open("GET", './plugin.php?id=vaptcha&type=challenge&scene={$scene}&t=' + (new Date()).getTime());
                 xmlHttp.send(null);
                 xmlHttp.onreadystatechange = function(result) {
                     if ((xmlHttp.readyState === 4) && (xmlHttp.status === 200)) {
@@ -73,38 +73,42 @@
             }
             function addEvent(el, type, cb){
                 if (el.addEventListener) {
-                el.addEventListener(type, cb); 
+                    el.addEventListener(type, cb); 
                 } else if (el.attachEvent)  {
-                el.attachEvent(type, cb);
+                    el.attachEvent('on' + type, cb);
                 }
             }
             vaptchaContainer = document.createElement('div');
             var html = '{lang vaptcha:please_finish_validation}<a href="https://www.vaptcha.com" target="_blank">{lang vaptcha:Provide_technical_support_by_vaptcha}</a>'
             var vaptcha = document.createElement('div');
             var vpHeader = document.createElement('div');
+            var mask = document.createElement('div');
+            vpHeader.style.marginTop = ((window.innerHeight || document.documentElement.clientHeight)
+                - 230) / 2 + 'px';
             vpHeader.innerHTML = html;
             vaptchaContainer.setAttribute('id', 'discuz-vp-container-{$pos}');
             vaptchaContainer.className = 'discuz-vp-container'
             vaptcha.className = 'vp-content';
             vpHeader.className = 'vp-header';
+            mask.className = 'vp-mask';
             vaptcha.innerHTML = '<div class="loading"><span style="animation-delay: -.32s"></span><span style="animation-delay: -.16s"></span><span></span></div>';
             var stopPropagation  = function(e){
                 if(e && e.stopPropagation) { 
                   e.stopPropagation(); 
-                } else { 
+                } else {
                   window.event.cancelBubble = true; 
                 } 
             }
             addEvent(vaptcha, 'click', stopPropagation);
             addEvent(vpHeader, 'click', stopPropagation);
             document.body.appendChild(vaptchaContainer); 
-            vaptchaContainer.innerHTML = html;
+            vaptchaContainer.appendChild(mask);
             vaptchaContainer.appendChild(vpHeader);
             vaptchaContainer.appendChild(vaptcha);
             var close = function() {
                 vaptchaContainer.style.display = 'none';
             }
-            addEvent(vaptchaContainer, 'click', close);
+            addEvent(mask, 'click', close);
             initVaptcha(vaptcha, form, 'embed', function(){
                 {$btn}.click();
                 setTimeout(function() {
@@ -119,7 +123,7 @@
             onload();
         } else {
             script = document.createElement('script');
-            script.src = '$Https://cdn.vaptcha.com/v.js';
+            script.src = 'https://cdn.vaptcha.com/v.js';
             script.id = 'vaptcha_v_js';
             script.onload = script.onreadystatechange = function(){
                 if(!this.readyState || this.readyState=='loaded' || this.readyState=='complete'){

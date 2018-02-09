@@ -32,7 +32,7 @@ class plugin_vaptcha_member extends plugin_vaptcha{
                 $this->get_embed_captcha('lsform', 'form.getElementsByClassName("vm")[2]');
                 return;
             } else {
-                $validatePass = $this->vaptcha->Validate($challenge, $token);
+                $validatePass = $this->vaptcha->Validate($challenge, $token, Helper::getScene());
                 if (!$validatePass) {
                     $this->get_embed_captcha('lsform', 'form.getElementsByClassName("vm")[2]', true);
                     // showmessage(lang('plugin/vaptcha', 'The second validation fails, please try refresh'));     
@@ -51,7 +51,7 @@ class plugin_vaptcha_member extends plugin_vaptcha{
             if(!$token) {
                 showmessage(lang('plugin/vaptcha', 'Please click the verify button below to man-machine validation')); 
             }
-            $validatePass = $this->vaptcha->validate($challenge, $token);
+            $validatePass = $this->vaptcha->validate($challenge, $token, Helper::getScene());
             if (!$validatePass) {
                 showmessage(lang('plugin/vaptcha', 'The second validation fails, please try refresh'));     
             }
@@ -72,7 +72,7 @@ class plugin_vaptcha_member extends plugin_vaptcha{
             if(!$token) {
                 showmessage(lang('plugin/vaptcha', 'Please click the verify button below to man-machine validation')); 
             }
-            $validatePass = $this->vaptcha->Validate($challenge, $token);
+            $validatePass = $this->vaptcha->Validate($challenge, $token, Helper::getScene());
             if (!$validatePass) {
                 showmessage(lang('plugin/vaptcha', 'The second validation fails, please try refresh'));     
             }

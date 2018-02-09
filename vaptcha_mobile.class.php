@@ -6,7 +6,8 @@ if(!defined('IN_DISCUZ')) {
 session_start();
 loadcache('plugin');
 
-include_once dirname(__FILE__) . '/lib/vaptcha.php';
+include_once dirname(__FILE__) . '/lib/vaptcha.class.php';
+include_once dirname(__FILE__) . '/lib/helper.class.php';
 include_once dirname(__FILE__) . '/template/mobile_captcha.php';
 
 class mobileplugin_vaptcha {
@@ -17,53 +18,16 @@ class mobileplugin_vaptcha {
 
     public function __construct(){
         global $_G;
-        $mobile = $_G['cache']['plugin']['vaptcha']['mobile'];
-        $vid = $_G['cache']['plugin']['vaptcha']['vid'];
-        $key = $_G['cache']['plugin']['vaptcha']['key'];
-        $this->modules = unserialize($_G['cache']['plugin']['vaptcha']['modules']);
+        $this->vaptcha_open = Helper::config('mobile');
+        $vid = Helper::config('vid');
+        $key = Helper::config('key');
+        $this->modules = Helper::config('enableModules');
         $this->vaptcha = new Vaptcha($vid, $key);
-        if (in_array($_G['groupid'], unserialize($_G['cache']['plugin']['vaptcha']['group_id'])) && $mobile == '1') {
-            $this->vaptcha_open = true;
-        } 
-        
-        $post_count = $_SESSION['pc_size_c'];
-        if ($post_count == null) {
-            $_SESSION['pc_size_c'] = 0;
-        }
-        else {
-            $post_num = $_G['cache']['plugin']['vaptcha']['post_num'];
-            if ($post_num != 0 && $post_count >= $post_num) {
-                $this->vaptcha_open = false;
-            }
-        }
     }
 
-    public function _cur_mod_is_valid(){
-        $cur = CURMODULE;
-        switch(CURMODULE){
-            case "logging":
-                $cur = "2";
-                break;
-            case "register":
-                $cur = "1";
-                break;
-            case "post": 
-                if($_GET["action"] =="reply"){
-                    $cur = "4";
-                }else if($_GET["action"] =="newthread"){
-                    $cur = "3";
-                }else if($_GET["action"] =="edit"){
-                    $cur = "5";
-                }
-                break;
-            case "forumdisplay":
-            case "viewthread":
-                $cur = "4";
-                break;
-        }
-        return in_array($cur, $this->modules);
+    public function _cur_mod_is_valid() {
+        return in_array(Helper::getCurrentModule(), $this->modules);
     }
-
 
     function has_authority() {
         
