@@ -4,7 +4,6 @@ if (!defined('IN_DISCUZ') || !defined('IN_ADMINCP')) {
     exit('Access Denied');
 }
 global $_G;
-
 require_once dirname(__FILE__) . '/lib/helper.class.php';
 
 if (isset($_POST['config'])) { 
