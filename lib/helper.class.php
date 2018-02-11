@@ -97,6 +97,10 @@ class Helper {
                 C::t('common_pluginvar')->delete_by_pluginid($plugin['pluginid']);
             }
         }
+        //new version add params
+        if (!isset($params['enableGroups'])) {
+            $params['enableGroups'] = range(1, 8);
+        }
         return $key ? $params[$key] : $params;
     }
 

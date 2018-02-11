@@ -59,7 +59,7 @@ class plugin_vaptcha_member extends plugin_vaptcha{
     }
 
     public function register_input_output() {
-        if(!$this->_cur_mod_is_valid()) return;
+        if(!$this->vaptcha_open || !$this->_cur_mod_is_valid()) return;
         $id = uniqid();
         return tpl_vaptcha('register_style', tpl_input_script($id), tpl_input_nodes($id, 'register_style'), false, $id);
     }

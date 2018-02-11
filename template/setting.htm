@@ -23,8 +23,13 @@
                 </div>
 				<p  class="pad" style="clear:both">&#36873;&#25321;&#38656;&#35201;&#39564;&#35777;&#30340;&#27169;&#22359;</p>
                 <div class="item" v-for="(module, key) in modules" :key="key">
-                    <input type="checkbox" v-model="config.enableModules" :id="key" :value="key + 1"> 
-                    <label :for="key">{{modules[key]}}</label>
+                    <input type="checkbox" v-model="config.enableModules" :id="'module' + key" :value="key + 1"> 
+                    <label :for="'module' + key">{{modules[key]}}</label>
+                </div>
+                <p  class="pad" style="clear:both">&#36873;&#25321;&#38656;&#35201;&#39564;&#35777;&#30340;&#29992;&#25143;&#32452;</p>
+                <div class="item" v-for="(group, key) in groups" :key="key">
+                    <input type="checkbox" v-model="config.enableGroups" :id="'group' + key" :value="key + 1"> 
+                    <label :for="'group' + key">{{groups[key]}}</label>
                 </div>
             </div>
             <div class="advanced-setting">
