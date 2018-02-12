@@ -1,17 +1,39 @@
-function init(config){
+function init(config, groups){
     var app = new Vue({
         el: '#app',
         data: function() {
             return {
                 config: config,
                 modules: ["\u767b\u5f55", "\u6ce8\u518c", "\u53d1\u5e16", "\u56de\u5e16","\u7f16\u8f91\u5e16","\u5e7f\u64ad","\u65e5\u5fd7","\u7559\u8a00","\u5145\u503c","\u95e8\u6237"," \u627e\u56de\u5bc6\u7801"],
-                groups: ["\u7ba1\u7406\u5458","\u8d85\u7ea7\u7248\u4e3b","\u7248\u4e3b","\u7981\u6b62\u53d1\u8a00","\u7981\u6b62\u8bbf\u95ee","\u7981\u6b62IP","\u6e38\u5ba2","\u7b49\u5f85\u9a8c\u8bc1\u4f1a\u5458"]
+                groups: groups,
+                groupsAll: false,
+                modulesAll: false
             }
         },
         mounted() {
             for (module in this.config.modules) {
                 this.stylefactory(module);
             }
+        },
+        watch: {
+            groupsAll(v) {
+                if(v) {
+                    var enableGroups = [];
+                    for(var i in this.groups) {
+                        enableGroups.push(this.groups[i].groupid);
+                    }
+                    this.config.enableGroups = enableGroups;
+                } else {
+                    this.config.enableGroups = [];
+                }
+            },
+            modulesAll(v) {
+                if(v) {
+                    this.config.enableModules = ['1','2','3','4','5','6','7','8','9','10','11'];
+                } else {
+                    this.config.enableModules = [];
+                }
+            },
         },
         methods: {
             submitSettig: function() {
@@ -51,6 +73,7 @@ function init(config){
                         _$('.vp-light-btn.vp-default-btn .vp-shield')[0].style.backgroundColor = '#' + hex;
                         _$('.vp-light-btn.vp-default-btn .vp-about')[0].style.backgroundColor = '#' + hex;
                         _$('.vp-dark-btn.vp-default-btn')[0].style.backgroundColor = '#' + hex;
+                        _$('.vp-light-btn .vp-circle-h')[0].style.borderColor = '#' + hex;
                         if(!bySetColor) self.config.modules[module].color = hex;
                     }
                 }).keyup(function(){

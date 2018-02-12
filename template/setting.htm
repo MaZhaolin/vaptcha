@@ -3,6 +3,11 @@
 <script src="{$static_path}/js/jquery.min.js"></script>
 <script src="{$static_path}/js/colpick.js"></script>
 <body>
+    <style>
+    .el-select-dropdown__item, .el-select-group__title{
+        text-align: left;
+    }    
+    </style>
    <form class="dz-set" method="POST" id='app' v-cloak >
        <div class="content">
             <div class="basic-setup">
@@ -21,16 +26,57 @@
                 <div class="right">
                     <p>&#24314;&#35758;&#21040;<a href="https://www.vaptcha.com/" target="_blank">&#86;&#65;&#80;&#84;&#67;&#72;&#65;&#23448;&#32593;</a>&#27880;&#20876;&#24182;&#20813;&#36153;&#33719;&#21462;&#31169;&#26377;&#75;&#69;&#89;&#21450;&#73;&#68;&#65292;&#19981;&#20165;&#21487;&#20197;&#26597;&#30475;&#23454;&#26102;&#32479;&#35745;&#32780;&#19988;&#26356;&#21152;&#23433;&#20840;</p>
                 </div>
-				<p  class="pad" style="clear:both">&#36873;&#25321;&#38656;&#35201;&#39564;&#35777;&#30340;&#27169;&#22359;</p>
-                <div class="item" v-for="(module, key) in modules" :key="key">
-                    <input type="checkbox" v-model="config.enableModules" :id="'module' + key" :value="key + 1"> 
-                    <label :for="'module' + key">{{modules[key]}}</label>
-                </div>
-                <p  class="pad" style="clear:both">&#36873;&#25321;&#38656;&#35201;&#39564;&#35777;&#30340;&#29992;&#25143;&#32452;</p>
-                <div class="item" v-for="(group, key) in groups" :key="key">
-                    <input type="checkbox" v-model="config.enableGroups" :id="'group' + key" :value="key + 1"> 
-                    <label :for="'group' + key">{{groups[key]}}</label>
-                </div>
+                <el-row :gutter="20">
+                    <el-col :span="12">
+                        <p  class="pad" style="clear:both">
+                            &#36873;&#25321;&#38656;&#35201;&#39564;&#35777;&#30340;&#27169;&#22359;
+                            <el-checkbox class="right" v-model="modulesAll" label="1">&#20840;&#36873;</el-checkbox>
+                        </p>
+                        <el-select style="width: 100%" filterable v-model="config.enableModules" multiple placeholder="&#35831;&#36873;&#25321;">
+                            <el-option
+                                v-for="(module, key) in modules"
+                                :key="key + 1"
+                                :label="module"
+                                :value="key + 1 + ''">
+                            </el-option>
+                        </el-select>
+                    </el-col>
+                    <el-col :span="12">
+                        <p  class="pad" style="clear:both">
+                            &#36873;&#25321;&#38656;&#35201;&#39564;&#35777;&#30340;&#29992;&#25143;&#32452;
+                            <el-checkbox class="right" v-model="groupsAll" label="1">&#20840;&#36873;</el-checkbox>
+                        </p>
+                        <el-select style="width: 100%" filterable v-model="config.enableGroups" multiple placeholder="&#35831;&#36873;&#25321;">
+                            <el-option-group label="&#31995;&#32479;&#29992;&#25143;&#32452;">
+                                <el-option
+                                    v-for="(group, key) in groups"
+                                    v-if="group.type == 'system'"
+                                    :key="group.groupid"
+                                    :label="group.grouptitle"
+                                    :value="group.groupid">
+                                </el-option>
+                            </el-option-group>
+                            <el-option-group label="&#20250;&#21592;&#29992;&#25143;&#32452;">
+                                <el-option
+                                    v-for="(group, key) in groups"
+                                    v-if="group.type == 'member'"
+                                    :key="group.groupid"
+                                    :label="group.grouptitle"
+                                    :value="group.groupid">
+                                </el-option>
+                            </el-option-group>
+                            <el-option-group label="&#33258;&#23450;&#20041;&#29992;&#25143;&#32452;">
+                                <el-option
+                                    v-for="(group, key) in groups"
+                                    v-if="group.type == 'special'"
+                                    :key="group.groupid"
+                                    :label="group.grouptitle"
+                                    :value="group.groupid">
+                                </el-option>
+                            </el-option-group>
+                        </el-select>
+                    </el-col>
+                </el-row>
             </div>
             <div class="advanced-setting">
                 <div class="title">
@@ -47,6 +93,10 @@
                 <div class="item">
                     <input type="checkbox" v-model="config.https" id="https"> 
                     <label for="https">&#24378;&#21046;&#21551;&#29992;https</label>
+                </div>
+                <div class="item">
+                    <input type="checkbox" v-model="config.ai" id="ai"> 
+                    <label for="ai">&#21551;&#29992;&#26234;&#33021;&#39564;&#35777;</label>
                 </div>
             </div>
             <div class="btn-setting">
@@ -105,6 +155,7 @@
                                     <div class="vp-shield vp-vertical">
                                         <span class="vp-vertical-cont">
                                             <i></i>
+                                            <span class="vp-circle-h"></span>
                                         </span>
                                     </div>
                                     <a class="vp-about vp-vertical" href="https://www.vaptcha.com/" target="_blank" title="&#20102;&#35299;&#86;&#65;&#80;&#84;&#67;&#72;&#65;">
@@ -120,6 +171,7 @@
                                     <div class="vp-basic-bar"></div>
                                     <div class="vp-shield vp-vertical">
                                         <span class="vp-vertical-cont">
+                                            <span class="vp-circle-h"></span>                                            
                                         </span>
                                     </div>
                                     <a class="vp-about " href="https://www.vaptcha.com/" target="_blank" title="&#20102;&#35299;&#86;&#65;&#80;&#84;&#67;&#72;&#65;">
@@ -138,11 +190,13 @@
    </form>
    <form method="POST" id="configForm">
    </form>
+   <link href="https://cdn.bootcss.com/element-ui/2.1.0/theme-chalk/index.css" rel="stylesheet">
    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
+   <script src="https://cdn.bootcss.com/element-ui/2.1.0/index.js"></script>
    <script src="{$static_path}/js/set.js"></script>   
 <script>
     var config = JSON.parse('{eval echo json_encode($config)}');
-    init(config);
+    init(config, JSON.parse('{eval echo json_encode($groups)}'));
     $.ajaxSetup({
         beforeSend: function(xhr) {
             this.url = '{$site_url}' + this.url;

@@ -99,7 +99,13 @@ class Helper {
         }
         //new version add params
         if (!isset($params['enableGroups'])) {
-            $params['enableGroups'] = range(1, 8);
+            $groups = C::t('common_usergroup')->fetch_all_by_type('', null, true);
+            $params['enableGroups'] = array_map(function($group){
+                return $group['groupid'];
+            }, $groups);
+        }
+        if (!isset($params['ai'])) {
+            $params['ai'] = true;
         }
         return $key ? $params[$key] : $params;
     }

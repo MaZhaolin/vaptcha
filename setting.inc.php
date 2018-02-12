@@ -28,5 +28,11 @@ $static_path  = Helper::staticUrl();
 $config = Helper::config();
 $config['modules'][0]['label'] = Helper::characet($config['modules'][0]['label']);
 $config['modules'][1]['label'] = Helper::characet($config['modules'][1]['label']);
+
+$groups = C::t('common_usergroup')->fetch_all_by_type('', null, true);
+$groups = array_map(function($group) {
+    $group['grouptitle'] = Helper::characet($group['grouptitle']);
+    return $group;
+}, $groups);
 include template('vaptcha:setting');
 ?>

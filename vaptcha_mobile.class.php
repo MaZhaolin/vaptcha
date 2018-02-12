@@ -22,6 +22,9 @@ class mobileplugin_vaptcha {
         $vid = Helper::config('vid');
         $key = Helper::config('key');
         $this->modules = Helper::config('enableModules');
+        if (!in_array($_G['groupid'], Helper::config('enableGroups'))) {
+            $this->vaptcha_open = false;
+        }
         $this->vaptcha = new Vaptcha($vid, $key);
     }
 

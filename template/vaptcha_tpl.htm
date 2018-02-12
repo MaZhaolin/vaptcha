@@ -3,8 +3,8 @@
     function tpl_vaptcha($style_key, $script, $nodes = '', $hasContainer = true, $id = false) {
         if(!$id) $id = uniqid();
         global $_G;
-        $isAi = $_G['cache']['plugin']['vaptcha']['is_ai'] ? 'true' : 'false';
         $isHttps = Helper::config('https') ? 'true' : 'false';
+        $ai = Helper::config('ai') ? 'true' : 'false';
         if ($isHttps == 'false' && $_SERVER['SERVER_PROTOCOL'] == 'HTTP/2.0') $isHttps = 'true';
         $Https = $isHttps == 'true' ? 'https' : 'http';
         $style = Helper::getStyle();
@@ -129,7 +129,7 @@ $nodes
                         https: $isHttps,
                         color:"$style['color']",
                         lang: 'zh-CN',
-                        ai: $isAi,
+                        ai: {$ai},
                         outage: './plugin.php?id=vaptcha&type=downtime',
                         success: function (token, challenge) {
                             _v.isPass = true;
