@@ -19,13 +19,13 @@ class Helper {
                 'pc' => true,
                 'mobile' => true,
                 'https' => false,
-                'enableModules' => range(1, 11),//array('register','logging','lostpasswd','post_newthread','post_relpay','post_edit','follow','spacecp_blog','spacecp_comment','spacecp_credit','portalcp'),
+                'enableModules' => array('1','2','3','4','5','6','7','8','9','10','11'),
                 'modules' => array(
                     0 => array(
                         'width' => '234',
                         'height' =>  '36',
                         'color' => '57ABFF',
-                        'label' =>  lang('plugin/vaptcha', 'man_machine_validation'),
+                        'label' =>  '\u4eba\u673a\u9a8c\u8bc1',
                         'style' =>  'dark', 
                         'type' =>  'float',
                         'required' => true
@@ -34,7 +34,7 @@ class Helper {
                         'width' => '209',
                         'height' =>  '36',
                         'color' => '57ABFF',
-                        'label' =>  lang('plugin/vaptcha', 'man_machine_validation'),
+                        'label' =>  '\u4eba\u673a\u9a8c\u8bc1',
                         'style' =>  'dark', 
                         'type' =>  'float',
                         'required' => false
@@ -103,6 +103,7 @@ class Helper {
             $params['enableGroups'] = array_map(function($group){
                 return $group['groupid'];
             }, $groups);
+            $params['enableGroups'] = array_values($params['enableGroups']);
         }
         if (!isset($params['ai'])) {
             $params['ai'] = true;

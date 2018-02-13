@@ -18,6 +18,9 @@ if (isset($_POST['config'])) {
     $data['modules'][0]['label'] = Helper::characet($data['modules'][0]['label'], CHARSET, 'utf-8');
     $data['modules'][1]['label'] = Helper::characet($data['modules'][1]['label'], CHARSET, 'utf-8');
     
+    if(!isset($data['enableModules'])) $data['enableModules'] = array();
+    if(!isset($data['enableGroups'])) $data['enableGroups'] = array();
+    
     C::t('common_setting')->update_batch(array("vaptcha" => $data));
     updatecache('setting');
     $landurl = 'action=plugins&operation=config&do='.$pluginid.'&identifier=vaptcha&pmod=setting';
