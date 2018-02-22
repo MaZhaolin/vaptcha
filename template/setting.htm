@@ -4,9 +4,12 @@
 <script src="{$static_path}/js/colpick.js"></script>
 <body>
     <style>
-    .el-select-dropdown__item, .el-select-group__title{
+    .i-select-dropdown__item, .i-select-group__title{
         text-align: left;
-    }    
+    }
+    .Checkbox.is-bordered.Checkbox--mini .Checkbox__label{
+        line-height: 19px !important;
+    }
     </style>
    <form class="dz-set" method="POST" id='app' v-cloak >
        <div class="content">
@@ -17,94 +20,93 @@
                 <p class="pad">&#39564;&#35777;&#21333;&#20803;&#37197;&#32622;</p>
                 <div class="item">
                     <label for="id">ID:</label>
-                    <input class="form-control" type="text" v-model="config.vid" id="id"/>
+                    <i-input style="width: 300px" :maxlength='24' :minlength='24' label="ID:" v-model="config.vid"></i-input>
                 </div>
                 <div class="item">
                     <label for="key">KEY:</label>
-                    <input class="form-control" type="text" v-model="config.key" id="key"/>
+                    <i-input style="width: 300px" :maxlength='32' :minlength='32' v-model="config.key"></i-input>
                 </div>
                 <div class="right">
                     <p>&#24314;&#35758;&#21040;<a href="https://www.vaptcha.com/" target="_blank">&#86;&#65;&#80;&#84;&#67;&#72;&#65;&#23448;&#32593;</a>&#27880;&#20876;&#24182;&#20813;&#36153;&#33719;&#21462;&#31169;&#26377;&#75;&#69;&#89;&#21450;&#73;&#68;&#65292;&#19981;&#20165;&#21487;&#20197;&#26597;&#30475;&#23454;&#26102;&#32479;&#35745;&#32780;&#19988;&#26356;&#21152;&#23433;&#20840;</p>
                 </div>
-                <el-row :gutter="20">
-                    <el-col :span="12">
+                <i-row :gutter="20">
+                    <i-col class="clear" :span="12">
                         <p  class="pad" style="clear:both">
                             &#36873;&#25321;&#38656;&#35201;&#39564;&#35777;&#30340;&#27169;&#22359;
-                            <el-checkbox class="right" v-model="modulesAll" label="1">&#20840;&#36873;</el-checkbox>
+                            <Checkbox class="right" v-model="modulesAll">&#20840;&#36873;</Checkbox>
                         </p>
-                        <el-select style="width: 100%" filterable v-model="config.enableModules" multiple placeholder="&#35831;&#36873;&#25321;">
-                            <el-option
+                        <i-select class="pl-15" style="width: 100%" size="mini" filterable v-model="config.enableModules" multiple placeholder="&#35831;&#36873;&#25321;">
+                            <i-option
                                 v-for="(module, key) in modules"
                                 :key="key + 1"
                                 :label="module"
                                 :value="key + 1 + ''">
-                            </el-option>
-                        </el-select>
-                    </el-col>
-                    <el-col :span="12">
+                            </i-option>
+                        </i-select>
+                    </i-col>
+                    <i-col  class="clear" :span="12">
                         <p  class="pad" style="clear:both">
                             &#36873;&#25321;&#38656;&#35201;&#39564;&#35777;&#30340;&#29992;&#25143;&#32452;
-                            <el-checkbox class="right" v-model="groupsAll" label="1">&#20840;&#36873;</el-checkbox>
+                            <Checkbox class="right" v-model="groupsAll" label="1">&#20840;&#36873;</Checkbox>
                         </p>
-                        <el-select style="width: 100%" filterable v-model="config.enableGroups" multiple placeholder="&#35831;&#36873;&#25321;">
-                            <el-option-group label="&#31995;&#32479;&#29992;&#25143;&#32452;">
-                                <el-option
+                        <i-select class="pl-15" style="width: 100%" size="mini" filterable v-model="config.enableGroups" multiple placeholder="&#35831;&#36873;&#25321;">
+                            <option-group label="&#31995;&#32479;&#29992;&#25143;&#32452;">
+                                <i-option
                                     v-for="(group, key) in groups"
                                     v-if="group.type == 'system'"
                                     :key="group.groupid"
                                     :label="group.grouptitle"
                                     :value="group.groupid">
-                                </el-option>
-                            </el-option-group>
-                            <el-option-group label="&#20250;&#21592;&#29992;&#25143;&#32452;">
-                                <el-option
+                                </i-option>
+                            </option-group>
+                            <option-group label="&#20250;&#21592;&#29992;&#25143;&#32452;">
+                                <i-option
                                     v-for="(group, key) in groups"
                                     v-if="group.type == 'member'"
                                     :key="group.groupid"
                                     :label="group.grouptitle"
                                     :value="group.groupid">
-                                </el-option>
-                            </el-option-group>
-                            <el-option-group label="&#33258;&#23450;&#20041;&#29992;&#25143;&#32452;">
-                                <el-option
+                                </i-option>
+                            </option-group>
+                            <option-group label="&#33258;&#23450;&#20041;&#29992;&#25143;&#32452;">
+                                <i-option
                                     v-for="(group, key) in groups"
                                     v-if="group.type == 'special'"
                                     :key="group.groupid"
                                     :label="group.grouptitle"
                                     :value="group.groupid">
-                                </el-option>
-                            </el-option-group>
-                        </el-select>
-                    </el-col>
-                </el-row>
+                                </i-option>
+                            </option-group>
+                        </i-select>
+                    </i-col>
+                </i-row>
             </div>
             <div class="advanced-setting">
                 <div class="title">
                     <h2>&#39640;&#32423;&#35774;&#32622;</h2>
                 </div>
                 <div class="item">
-                    <input type="checkbox" v-model="config.pc" id="web"> 
-                    <label for="web">&#21551;&#29992;&#87;&#69;&#66;&#31471;</label>
+                    <Checkbox size="mini" border v-model="config.pc">&#21551;&#29992;&#87;&#69;&#66;&#31471;</Checkbox>
                 </div>
                 <div class="item">
-                    <input type="checkbox" v-model="config.mobile" id="move"> 
-                    <label for="move">&#21551;&#29992;&#31227;&#21160;&#31471;</label>
+                    <Checkbox size="mini" border v-model="config.mobile">&#21551;&#29992;&#31227;&#21160;&#31471;</Checkbox>
                 </div>
                 <div class="item">
-                    <input type="checkbox" v-model="config.https" id="https"> 
-                    <label for="https">&#24378;&#21046;&#21551;&#29992;https</label>
+                    <Checkbox size="mini" border v-model="config.https">&#24378;&#21046;&#21551;&#29992;https</Checkbox>
                 </div>
                 <div class="item">
-                    <input type="checkbox" v-model="config.ai" id="ai"> 
-                    <label for="ai">&#21551;&#29992;&#26234;&#33021;&#39564;&#35777;</label>
-                    <el-tooltip class="item" effect="dark" placement="top">
-                        <div slot="content" style="text-align: left">
-                                &#22914;&#26524;&#24320;&#21551;&#65292;&#39640;&#39118;&#38505;&#25805;&#20316;&#25110;&#32773;&#23458;&#25143;&#31471;&#22312;&#39564;&#35777;&#26102;&#38656;&#35201;&#36827;&#34892;&#25163;&#21183;&#39564;&#35777;&#65292;<br>
-                                &#26080;&#39118;&#38505;&#23458;&#25143;&#31471;&#21017;&#21487;&#20197;&#19968;&#38190;&#36890;&#36807;&#39564;&#35777;&#65292;&#22823;&#24133;&#25552;&#21319;&#29992;&#25143;&#20307;&#39564;&#12290;
-                            <br>&#24314;&#35758;&#24320;&#21551;&#27492;&#39033;
+                    <Checkbox size="mini" v-model="config.ai">
+                            &#21551;&#29992;&#26234;&#33021;&#39564;&#35777;
+                    </Checkbox>
+                    <Tooltip placement="top">
+                        <div slot="content">
+                                &#22914;&#26524;&#24320;&#21551;&#65292;&#39640;&#39118;&#38505;&#25805;&#20316;&#25110;&#32773;&#23458;&#25143;&#31471;&#22312;&#39564;&#35777;&#26102;
+                                <br>&#38656;&#35201;&#36827;&#34892;&#25163;&#21183;&#39564;&#35777;&#65292;&#26080;&#39118;&#38505;&#23458;&#25143;&#31471;&#21017;&#21487;&#20197;&#19968;
+                                <br>&#38190;&#36890;&#36807;&#39564;&#35777;&#65292;&#22823;&#24133;&#25552;&#21319;&#29992;&#25143;&#20307;&#39564;&#12290;
+                                <br>&#24314;&#35758;&#24320;&#21551;&#27492;&#39033;   
                         </div>
-                        <i class="el-icon-question" style="padding-left: 0;font-size: 14px"></i>
-                    </el-tooltip>
+                        <Icon type="help-circled"></Icon>
+                    </Tooltip>
                 </div>
             </div>
             <div class="btn-setting">
@@ -116,11 +118,13 @@
                         <span class="model-intro">{{modules[key]}}&#27169;&#22359;</span>
                         <div class="group-set">
                             <label for="vaptchaWidth">width(px)</label>
-                            <input class="form-control minw" type="text" v-model="module.width" @blur="limitNumber(module, 'width', 200)"/>
+                            <i-input class="form-control minw" v-model="module.width"  @on-blur="limitNumber(module, 'width', 200)" size="small"></i-input>                            
+                            <!-- <input class="form-control minw" type="text" v-model="module.width" @blur="limitNumber(module, 'width', 200)"/> -->
                         </div>
                         <div class="group-set">
                             <label for="vaptchaHeight">height(px)</label>
-                            <input class="form-control minw" type="text" v-model="module.height" @blur="limitNumber(module, 'height', 36, 46)"/>
+                            <i-input class="form-control minw"  v-model="module.height" @on-blur="limitNumber(module, 'height', 36, 46)" size="small"></i-input>                            
+                            <!-- <input class="form-control minw" type="text" v-model="module.height" @blur="limitNumber(module, 'height', 36, 46)"/> -->
                         </div>
                         <div class="group-set">
                             <label>color</label>
@@ -131,25 +135,37 @@
                         </div>
                         <div class="group-set">
                             <label for="vaptchaWidth">style</label>
-                            <select class="select-style" v-model="module.style">
-                                <option value="dark">Widows</option>
-                                <option value="light">IOS</option>
-                            </select>
+                            <i-select style="width: 80px;display:block" v-model="module.style" size="small" placeholder="style">
+                                <i-option
+                                    label="Widows"
+                                    value="dark">
+                                </i-option>
+                                <i-option
+                                    label="IOS"
+                                    value="light">
+                                </i-option>
+                            </i-select>
                         </div>
                         <div class="group-set">
                             <label for="vaptchaWidth">&#26174;&#31034;&#31867;&#22411;</label>
-                            <select class="select-style" v-model="module.type">
-                                <option value="float">&#28014;&#21160;&#24335;</option>
-                                <option value="popup">&#24377;&#20986;&#24335;</option>
-                            </select>
+                            <i-select style="width: 80px;display:block" v-model="module.type" size="small" placeholder="style">
+                                <i-option
+                                    label="&#28014;&#21160;&#24335;"
+                                    value="float">
+                                </i-option>
+                                <i-option
+                                    label="&#24377;&#20986;&#24335;"
+                                    value="popup">
+                                </i-option>
+                            </i-select>
                         </div>
                         <div class="group-set group-checkbox" :style="{visibility: key < 2 ? 'visible' : 'hidden'}">
-                            <input type="checkbox" v-model="module.required" :checked="module.required">
+                            <Checkbox size="small"  v-model="module.required" ></Checkbox>
                             <span class="check-mark">*</span>
                         </div>
                         <div class="group-set" :style="{visibility: key < 2 ? 'visible' : 'hidden'}">
                             <label for="vaptchaLabel">label</label>
-                            <input class="form-control" type="text" v-model="module.label" id="vaptchaLabel" />
+                            <i-input class="form-control"  v-model="module.label" size="mini"></i-input>
                         </div>
                     </div>
                     <div class="model-preview">
@@ -198,9 +214,9 @@
    </form>
    <form method="POST" id="configForm">
    </form>
-   <link href="https://cdn.bootcss.com/element-ui/2.1.0/theme-chalk/index.css" rel="stylesheet">
    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
-   <script src="https://cdn.bootcss.com/element-ui/2.1.0/index.js"></script>
+   <link href="https://cdn.bootcss.com/iview/2.9.2/styles/iview.css" rel="stylesheet">
+   <script src="https://cdn.bootcss.com/iview/2.9.2/iview.min.js"></script>
    <script src="{$static_path}/js/set.js"></script>   
 <script>
     var config = JSON.parse('{eval echo json_encode($config)}');
