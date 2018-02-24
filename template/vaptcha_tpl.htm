@@ -135,15 +135,15 @@ $nodes
                             _v.isPass = true;
                             _v.msg && (_v.msg.style.display = 'none');
                             var inputs = form.getElementsByTagName('input');
-                            inputs['vaptcha_challenge'].value = challenge;
-                            inputs['vaptcha_token'].value = token;
+                            form.querySelector('input[name=vaptcha_challenge]').value = challenge;
+                            form.querySelector('input[name=vaptcha_token]').value = token;
                             successCallback && successCallback();
                         }
                     }
                     window.vaptcha(options, function (obj) { 
                         var inputs = form.getElementsByTagName('input');
-                        inputs['vaptcha_challenge'].value = '';
-                        inputs['vaptcha_token'].value = '';
+                        form.querySelector('input[name=vaptcha_challenge]').value = '';
+                        form.querySelector('input[name=vaptcha_token]').value = '';
                         obj.init();
                         _v.vaptcha = obj;
                     });             
