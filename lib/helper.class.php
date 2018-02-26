@@ -25,7 +25,7 @@ class Helper {
                         'width' => '234',
                         'height' =>  '36',
                         'color' => '57ABFF',
-                        'label' =>  '\u4eba\u673a\u9a8c\u8bc1',
+                        'label' =>  lang('plugin/vaptcha', 'man_machine_validation'),
                         'style' =>  'dark', 
                         'type' =>  'float',
                         'required' => true
@@ -34,7 +34,7 @@ class Helper {
                         'width' => '209',
                         'height' =>  '36',
                         'color' => '57ABFF',
-                        'label' =>  '\u4eba\u673a\u9a8c\u8bc1',
+                        'label' =>  lang('plugin/vaptcha', 'man_machine_validation'),
                         'style' =>  'dark', 
                         'type' =>  'float',
                         'required' => false
