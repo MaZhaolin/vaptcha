@@ -10,13 +10,13 @@ function init(config, groups){
                 modulesAll: false
             }
         },
-        mounted() {
+        mounted: function() {
             for (module in this.config.modules) {
                 this.stylefactory(module);
             }
         },
         watch: {
-            groupsAll(v) {
+            groupsAll: function(v) {
                 if(v) {
                     var enableGroups = [];
                     for(var i in this.groups) {
@@ -27,7 +27,7 @@ function init(config, groups){
                     this.config.enableGroups = [];
                 }
             },
-            modulesAll(v) {
+            modulesAll: function(v) {
                 if(v) {
                     this.config.enableModules = ['1','2','3','4','5','6','7','8','9','10','11'];
                 } else {
@@ -40,7 +40,7 @@ function init(config, groups){
                 this.appendFormValue('config', this.config);
                 $('#configForm').submit();
             },
-            appendFormValue(name, value) {
+            appendFormValue: function(name, value) {
                 for(key in value) {
                     var val = value[key];
                     var _name = name + '[' + key + ']'
@@ -53,7 +53,7 @@ function init(config, groups){
                     }
                 }
             },
-            setDefaultConfig() {
+            setDefaultConfig: function() {
                 this.config.modules = JSON.parse('{"0":{"width":"234","height":"36","color":"57ABFF","label":"\u4eba\u673a\u9a8c\u8bc1:","style":"dark","type":"float","required":true},"1":{"width":"209","height":"36","color":"57ABFF","label":"\u4eba\u673a\u9a8c\u8bc1:","style":"dark","type":"float","required":false},"2":{"width":"310","height":"36","color":"57ABFF","label":"","style":"dark","type":"float","required":false},"3":{"width":"306","height":"36","color":"57ABFF","label":"","style":"dark","type":"float","required":false},"6":{"width":"306","height":"36","color":"57ABFF","label":"","style":"dark","type":"float","required":false},"7":{"width":"310","height":"36","color":"57ABFF","label":"","style":"dark","type":"float","required":false},"8":{"width":"234","height":"36","color":"57ABFF","label":"","style":"dark","type":"float","required":false}}');
                 for (module in this.config.modules) {
                     this.stylefactory(module);                
@@ -80,7 +80,7 @@ function init(config, groups){
                     $(this).colpickSetColor(this.value);
                 }).colpickSetColor(self.config.modules[module].color);
             },
-            limitNumber(target, key, minValue, maxValue) {
+            limitNumber: function(target, key, minValue, maxValue) {
                 var v = target[key];
                 !Number(v) && (v = parseInt(v) ? parseInt(v) : '');
                 minValue && v < minValue && (v = minValue);
