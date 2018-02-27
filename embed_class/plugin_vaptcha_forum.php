@@ -81,8 +81,5 @@ JS;
 				showmessage(lang('plugin/vaptcha', 'The second validation fails, please try refresh'));		
             }
         }
-
-
-        
 	}
 }

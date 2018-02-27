@@ -71,7 +71,7 @@
 				<item id="Provide_technical_support_by_vaptcha"><![CDATA[由vaptcha提供技术支持]]></item>
 				<item id="man_machine_validation"><![CDATA[人机验证:]]></item>
 				<item id="loading_captcha"><![CDATA[CAPTCHA ]]></item>
-				<item id="loading_vaptcha"><![CDATA[is initialing...]]></item>
+				<item id="loading_vaptcha"><![CDATA[is initializing...]]></item>
 			</item>
 		</item>
 	</item>
