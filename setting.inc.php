@@ -33,7 +33,7 @@ $config['modules'][1]['label'] = Helper::characet($config['modules'][1]['label']
 
 $groups = C::t('common_usergroup')->fetch_all_by_type('', null, true);
 for($i = 0; $i < count( $groups); $i ++) {
-    $groups[i]['grouptitle'] = Helper::characet($groups[i]['grouptitle']);
+    $groups[$i]['grouptitle'] = Helper::characet($groups[$i]['grouptitle']);
 }
 include template('vaptcha:setting');
 ?>
