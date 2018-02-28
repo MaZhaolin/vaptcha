@@ -24,7 +24,7 @@ class plugin_vaptcha {
         $vid = Helper::config('vid');
         $key = Helper::config('key');
         $this->modules = Helper::config('enableModules');
-        if (!in_array($_G['groupid'], Helper::config('enableGroups'))) {
+        if (!in_array($_G['groupid'], Helper::config('enableGroups'))) {            
             $this->vaptcha_open = false;
         }
         $this->vaptcha = new Vaptcha($vid, $key);
@@ -54,6 +54,7 @@ class plugin_vaptcha {
         $Https = $isHttps == 'true' ? 'https' : 'http';
         $pos = CURMODULE;
         $scene = Helper::getScene();
+        $lang = Helper::config('lang');
         include template('vaptcha:embed_captcha'); 
         dexit();
     }

@@ -23,7 +23,7 @@
                             challenge: data.challenge,
                             container: element,
                             type: type,
-                            lang: 'zh-CN',
+                            lang: '{$lang}',
                             outage: './plugin.php?id=vaptcha&type=downtime',
                             success: function (token, challenge) {
                                 var inputs = form.getElementsByTagName('input');

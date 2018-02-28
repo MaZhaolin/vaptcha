@@ -10,6 +10,7 @@
         $style = Helper::getStyle();
         $click_style = Helper::config('style');
         $scene = Helper::getScene();
+        $lang = Helper::config('lang');        
     }
 <!--{block return}-->
 <style>
@@ -128,7 +129,7 @@ $nodes
                         style: "$style['style']",
                         https: $isHttps,
                         color:"$style['color']",
-                        lang: 'zh-CN',
+                        lang: '{$lang}',
                         ai: {$ai},
                         outage: './plugin.php?id=vaptcha&type=downtime',
                         success: function (token, challenge) {

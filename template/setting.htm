@@ -89,6 +89,12 @@
                 <div class="title">
                     <h2>&#39640;&#32423;&#35774;&#32622;</h2>
                 </div>
+                &#35821;&#35328;&#36873;&#25321;:
+                <i-select size="small" v-model="config.lang" placeholder="&#36873;&#25321;&#35821;&#35328;" style="width: 100px">
+                    <i-option label="&#31616;&#20307;&#20013;&#25991;" value="zh-CN"></i-option>
+                    <i-option label="&#31616;&#20307;&#20013;&#25991;" value="zh-TW"></i-option>
+                    <i-option label="English" value="en"></i-option>
+                </i-select>
                 <div class="item">
                     <Checkbox size="mini" border v-model="config.pc">&#21551;&#29992;&#87;&#69;&#66;&#31471;</Checkbox>
                 </div>
@@ -174,7 +180,7 @@
                         </div>
                         <div class="group-set" :style="{visibility: key < 2 ? 'visible' : 'hidden'}">
                             <label for="vaptchaLabel">label</label>
-                            <i-input class="form-control"  v-model="module.label" size="mini"></i-input>
+                            <i-input class="form-control"  v-model="module.label" size="small"></i-input>
                         </div>
                     </div>
                     <div class="model-preview">

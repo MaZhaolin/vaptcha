@@ -11,6 +11,7 @@ function get_captcha($form,$button, $script = '') {
     $please_finish_validation = lang('plugin/vaptcha',  'please_finish_validation');
     $Provide_technical_support_by_vaptcha = lang('plugin/vaptcha',  'Provide_technical_support_by_vaptcha');
     $scene = Helper::getScene();
+    $lang = Helper::config('lang');
 $result = <<<HTML
 <style id="dzVaptcha">
     #discuz-vp-container{
@@ -101,6 +102,7 @@ $result = <<<HTML
                             container: element,
                             type: type,
                             https: $isHttps,
+                            lang: '{$lang}',
                             outage: './plugin.php?id=vaptcha&type=downtime',
                             success: function (token, challenge) {
                                 var inputs = form.getElementsByTagName('input');

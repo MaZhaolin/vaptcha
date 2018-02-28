@@ -101,12 +101,15 @@ class Helper {
         if (!isset($params['enableGroups'])) {
             $groups = C::t('common_usergroup')->fetch_all_by_type('', null, true);
             $params['enableGroups'] = array();
-            for($i = 0; $i < count($groups); $i ++) {
-                array_push($params['enableGroups'], $groups[$i]['groupid']);
+            foreach($groups as $group) {
+                array_push($params['enableGroups'], $group['groupid']);
             }
         }
         if (!isset($params['ai'])) {
             $params['ai'] = true;
+        }
+        if (!isset($params['lang'])) {
+            $params['lang'] = 'zh-CN';
         }
         return $key ? $params[$key] : $params;
     }
