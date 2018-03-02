@@ -52,6 +52,9 @@
         color: #CCCCCC;
         text-decoration: none;
     }
+    .vaptcha-float-cont{
+        z-index: 999;
+    }
 </style>
 <div id='vaptcha_$id' style="display: none">
     <div class='vaptcha-form'>
@@ -89,7 +92,7 @@ $nodes
                 this.msg = null;
                 this.refresh = function () {
                     if (this.isPass) {
-                        this.vaptcha.destroy();
+                        // this.vaptcha.destroy();
                         return initVaptcha(element, form, type, successCallback);
                     }
                     return this;
@@ -157,7 +160,7 @@ $nodes
         $script
     }
     var script = document.getElementById('vaptcha_v_js');
-    if(script){ 
+    if(script && script.loaded == 'success'){ 
         onload();
     } else {
         script = document.createElement('script');
@@ -166,6 +169,7 @@ $nodes
         script.onload = script.onreadystatechange = function(){
             if(!this.readyState || this.readyState=='loaded' || this.readyState=='complete'){ 
                 onload();
+                script.loaded = true;
                 script.onload = script.onreadystatechange = null;
             }
         };
