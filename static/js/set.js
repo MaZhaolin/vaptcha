@@ -10,6 +10,18 @@ function init(config, groups){
                 modulesAll: false
             }
         },
+        computed: {
+            tip: function() {
+                    switch(this.config.lang) {
+                        case 'zh-TW':
+                            return '\u55ae\u64ca\u9032\u884c\u4eba\u6a5f\u9a57\u8b49';
+                        case 'en':
+                            return "I'm not a robot";
+                        default: 
+                            return '\u5355\u51fb\u8fdb\u884c\u4eba\u673a\u9a8c\u8bc1';
+                    }
+            }
+        },
         mounted: function() {
             for (module in this.config.modules) {
                 this.stylefactory(module);

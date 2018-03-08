@@ -202,7 +202,7 @@
                                             <i></i>
                                         </span>
                                     </a>
-                                    <div :style="{lineHeight: module.height + 'px'}" class="vp-tip">&#21333;&#20987;&#36827;&#34892;&#20154;&#26426;&#39564;&#35777;</div>
+                                    <div :style="{lineHeight: module.height + 'px'}" class="vp-tip">{{{tip}}}</div>
                                 </div>
                             </div>
                             <div v-show="module.style == 'light'" :style="{width: module.width + 'px', height: module.height + 'px'}"  class="vp-basic-btn vp-light-btn vp-default-btn" style="display: none;">
@@ -217,7 +217,7 @@
                                         <span class="vp-about-img">
                                         </span>
                                     </a>
-                                    <div class="vp-tip">&#21333;&#20987;&#36827;&#34892;&#20154;&#26426;&#39564;&#35777;</div>
+                                    <div class="vp-tip">{{{tip}}}</div>
                                 </div>
                             </div>
                         </div>
@@ -232,7 +232,7 @@
    <script src="https://cdn.bootcss.com/vue/2.5.13/vue.min.js"></script>
    <link href="https://cdn.bootcss.com/iview/2.9.2/styles/iview.css" rel="stylesheet">
    <script src="https://cdn.bootcss.com/iview/2.9.2/iview.min.js"></script>
-   <script src="{$static_path}/js/set.js"></script>   
+   <script src="{$static_path}/js/set.js?v=2.6.2"></script>   
 <script>
     var config = JSON.parse('{eval echo json_encode($config)}');
     init(config, JSON.parse('{eval echo json_encode($groups)}'));
