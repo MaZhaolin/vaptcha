@@ -72,13 +72,11 @@ class mobileplugin_vaptcha_forum extends mobileplugin_vaptcha {
     
     function post_bottom_mobile() {
         if(!$this->vaptcha_open || !$this->_cur_mod_is_valid()) return;
-        return get_captcha('postform', 'postsubmit');        
     }
 
 
     function viewthread_bottom_mobile() {
-        if(!$this->vaptcha_open || !$this->_cur_mod_is_valid()) return;
-        return get_captcha('fastpostform', 'fastpostsubmit');                
+        if(!$this->vaptcha_open || !$this->_cur_mod_is_valid()) return;         
     }
 
     function post_recode() {
@@ -90,7 +88,9 @@ class mobileplugin_vaptcha_forum extends mobileplugin_vaptcha {
             $challenge = $_GET['vaptcha_challenge'];
             $token = $_GET['vaptcha_token'];
             if(!$token) {
-                showmessage('');
+                if($_GET['handlekey'] === 'postform') showmessage(get_captcha('postform', 'postsubmit', 'button.click()'));
+                if($_GET['handlekey'] === 'fastpost') showmessage(get_captcha('fastpostform', 'fastpostsubmit', 'button.click()'));
+                if($_GET['handlekey'] === 'fastpostform') showmessage(get_captcha('fastpostform', 'postsubmit', 'button.click()'));
             }
             $validatePass = $this->vaptcha->Validate($challenge, $token);
             if (!$validatePass) {

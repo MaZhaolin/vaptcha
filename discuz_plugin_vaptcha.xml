@@ -62,12 +62,12 @@
 			<item id="scriptlang">
 				<item id="Please click the verify button below to man-machine validation"><![CDATA[请先完成人机验证]]></item>
 				<item id="The second validation fails, please try refresh"><![CDATA[验证失效，请重新验证]]></item>
-				<item id="please_finish_validation"><![CDATA[请绘制轨迹完成人机验证]]></item>
+				<item id="please_finish_validation"><![CDATA[请绘制图中手势完成人机验证]]></item>
 				<item id="Provide_technical_support_by_vaptcha"><![CDATA[由vaptcha提供技术支持]]></item>
 				<item id="man_machine_validation"><![CDATA[人机验证:]]></item>
 			</item>
 			<item id="templatelang">
-				<item id="please_finish_validation"><![CDATA[请绘制轨迹完成人机验证]]></item>
+				<item id="please_finish_validation"><![CDATA[请绘制图中手势完成人机验证]]></item>
 				<item id="Provide_technical_support_by_vaptcha"><![CDATA[由vaptcha提供技术支持]]></item>
 				<item id="man_machine_validation"><![CDATA[人机验证:]]></item>
 				<item id="loading_captcha"><![CDATA[CAPTCHA ]]></item>
