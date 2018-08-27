@@ -14,8 +14,8 @@ class Helper {
         } else {
             $i = 0;
             $params = array (
-                'vid' => '59f044cda4860b0ea89a3791',
-                'key' => '378e8b69d05d47418f8872ef28758efa',
+                'vid' => '5b83baaafc650e5e989e3273',
+                'key' => '4f2cb03ff3f44349b3bd266503ccd143',
                 'pc' => true,
                 'mobile' => true,
                 'https' => false,
