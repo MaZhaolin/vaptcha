@@ -8,13 +8,13 @@
 		<item id="plugin">
 			<item id="available"><![CDATA[1]]></item>
 			<item id="adminid"><![CDATA[1]]></item>
-			<item id="name"><![CDATA[VAPTCHAæ‰‹åŠ¿éªŒè¯ç ]]></item>
+			<item id="name"><![CDATA[VAPTCHAÊÖÊÆÑéÖ¤Âë]]></item>
 			<item id="identifier"><![CDATA[vaptcha]]></item>
-			<item id="description"><![CDATA[VAPTCHAæ˜¯â€Variation Analysis - based Public Turing Test to Tell Computers and Humans Apart â€çš„ç®€ç§°ï¼Œä¹Ÿå«æ‰‹åŠ¿éªŒè¯ã€‚ä¸€ç§é€šè¿‡ç”¨æˆ·é¼ æ ‡æ‰‹åŠ¿å³å¯å®ŒæˆäººæœºéªŒè¯çš„å›¾çµæµ‹è¯•ç¨‹åºã€‚VAPTCHAæ›´åŠ ç®€å•å’Œå®‰å…¨ï¼Œæ˜¯ç›®å‰ä¼ ç»ŸéªŒè¯ç çš„æœ€ä½³æ›¿ä»£æ–¹æ¡ˆã€‚VAPTCHAä¸ä»…å¤§å¹…èŠ‚çœäº†ç”¨æˆ·åœ¨ä½¿ç”¨äº’è”ç½‘æœåŠ¡æ—¶åœ¨äººæœºéªŒè¯ä¸Šé¢çš„è€—æ—¶ï¼Œå¹³å‡é€šè¿‡æ—¶é—´ä¸è¶…è¿‡1ç§’ï¼ŒåŒæ—¶ä¹Ÿæ˜¯ç›®å‰ä¸–ç•Œä¸Šæœ€ä¸å¯èƒ½è¢«ç ´è§£çš„éªŒè¯ç³»ç»Ÿã€‚]]></item>
+			<item id="description"><![CDATA[VAPTCHAÊÇ¡±Variation Analysis - based Public Turing Test to Tell Computers and Humans Apart ¡±µÄ¼ò³Æ£¬Ò²½ÐÊÖÊÆÑéÖ¤¡£Ò»ÖÖÍ¨¹ýÓÃ»§Êó±êÊÖÊÆ¼´¿ÉÍê³ÉÈË»úÑéÖ¤µÄÍ¼Áé²âÊÔ³ÌÐò¡£VAPTCHA¸ü¼Ó¼òµ¥ºÍ°²È«£¬ÊÇÄ¿Ç°´«Í³ÑéÖ¤ÂëµÄ×î¼ÑÌæ´ú·½°¸¡£VAPTCHA²»½ö´ó·ù½ÚÊ¡ÁËÓÃ»§ÔÚÊ¹ÓÃ»¥ÁªÍø·þÎñÊ±ÔÚÈË»úÑéÖ¤ÉÏÃæµÄºÄÊ±£¬Æ½¾ùÍ¨¹ýÊ±¼ä²»³¬¹ý1Ãë£¬Í¬Ê±Ò²ÊÇÄ¿Ç°ÊÀ½çÉÏ×î²»¿ÉÄÜ±»ÆÆ½âµÄÑéÖ¤ÏµÍ³¡£]]></item>
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[vaptcha/]]></item>
 			<item id="copyright"><![CDATA[VAPTCHA]]></item>
-			<item id="version"><![CDATA[2.2.8]]></item>
+			<item id="version"><![CDATA[2.2.9]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[vaptcha]]></item>
@@ -45,7 +45,7 @@
 				<item id="2">
 					<item id="name"><![CDATA[setting]]></item>
 					<item id="param"><![CDATA[]]></item>
-					<item id="menu"><![CDATA[è®¾ç½®]]></item>
+					<item id="menu"><![CDATA[ÉèÖÃ]]></item>
 					<item id="url"><![CDATA[]]></item>
 					<item id="type"><![CDATA[3]]></item>
 					<item id="adminid"><![CDATA[0]]></item>
@@ -60,16 +60,16 @@
 		<item id="version"><![CDATA[X2.5,X3,X3.1,X3.2,X3.3,X3.4]]></item>
 		<item id="language">
 			<item id="scriptlang">
-				<item id="Please click the verify button below to man-machine validation"><![CDATA[è¯·å…ˆå®ŒæˆäººæœºéªŒè¯]]></item>
-				<item id="The second validation fails, please try refresh"><![CDATA[éªŒè¯å¤±æ•ˆï¼Œè¯·é‡æ–°éªŒè¯]]></item>
-				<item id="please_finish_validation"><![CDATA[è¯·ç»˜åˆ¶å›¾ä¸­æ‰‹åŠ¿å®ŒæˆäººæœºéªŒè¯]]></item>
-				<item id="Provide_technical_support_by_vaptcha"><![CDATA[ç”±vaptchaæä¾›æŠ€æœ¯æ”¯æŒ]]></item>
-				<item id="man_machine_validation"><![CDATA[äººæœºéªŒè¯:]]></item>
+				<item id="Please click the verify button below to man-machine validation"><![CDATA[ÇëÏÈÍê³ÉÈË»úÑéÖ¤]]></item>
+				<item id="The second validation fails, please try refresh"><![CDATA[ÑéÖ¤Ê§Ð§£¬ÇëÖØÐÂÑéÖ¤]]></item>
+				<item id="please_finish_validation"><![CDATA[Çë»æÖÆÍ¼ÖÐÊÖÊÆÍê³ÉÈË»úÑéÖ¤]]></item>
+				<item id="Provide_technical_support_by_vaptcha"><![CDATA[ÓÉvaptchaÌá¹©¼¼ÊõÖ§³Ö]]></item>
+				<item id="man_machine_validation"><![CDATA[ÈË»úÑéÖ¤:]]></item>
 			</item>
 			<item id="templatelang">
-				<item id="please_finish_validation"><![CDATA[è¯·ç»˜åˆ¶å›¾ä¸­æ‰‹åŠ¿å®ŒæˆäººæœºéªŒè¯]]></item>
-				<item id="Provide_technical_support_by_vaptcha"><![CDATA[ç”±vaptchaæä¾›æŠ€æœ¯æ”¯æŒ]]></item>
-				<item id="man_machine_validation"><![CDATA[äººæœºéªŒè¯:]]></item>
+				<item id="please_finish_validation"><![CDATA[Çë»æÖÆÍ¼ÖÐÊÖÊÆÍê³ÉÈË»úÑéÖ¤]]></item>
+				<item id="Provide_technical_support_by_vaptcha"><![CDATA[ÓÉvaptchaÌá¹©¼¼ÊõÖ§³Ö]]></item>
+				<item id="man_machine_validation"><![CDATA[ÈË»úÑéÖ¤:]]></item>
 				<item id="loading_captcha"><![CDATA[CAPTCHA ]]></item>
 				<item id="loading_vaptcha"><![CDATA[is initializing...]]></item>
 			</item>
