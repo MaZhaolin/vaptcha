@@ -73,6 +73,7 @@
 $nodes
 <script type='text/javascript'>
 (function () {
+    window.console = window.console || {log: function() {return false;}}
     console.log('vaptcha version 2.2.5')
     function addEvent(el, type, cb){
         if (el.addEventListener) {
