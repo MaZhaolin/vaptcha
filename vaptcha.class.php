@@ -55,6 +55,7 @@ class plugin_vaptcha {
         $pos = CURMODULE;
         $scene = Helper::getScene();
         $lang = Helper::config('lang');
+        $vid = Helper::config('vid');
         include template('vaptcha:embed_captcha'); 
         dexit();
     }

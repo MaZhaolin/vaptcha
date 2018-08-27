@@ -1,4 +1,4 @@
-{eval 
+{eval
     function tpl_input_nodes($id, $style_key) {
         global $_G;
         $width = $_G['cache']['plugin']['vaptcha']['btn_width'];
@@ -10,11 +10,11 @@
 <div class="rfm">
 <table>
     <tbody><tr>
-    <!--{if trim($style['label'])}-->
+    <!--{if trim($style['label']) || $style['required']}-->
     <th><label for="vaptcha_container_$id">
         <!--{if $style['required']}-->
             <span class="rq">*</span>
-        <!--{/if}-->        
+        <!--{/if}-->
             $style['label']
     </label></th>
     <!--{/if}-->
@@ -40,9 +40,9 @@
     function tpl_input_script($id, $isLogin = false) {
 
 }
-<!--{block return}--> 
-var vaptcha = document.getElementById('vaptcha_container_$id'); 
-_vaptcha = initVaptcha(vaptcha, form); 
+<!--{block return}-->
+var vaptcha = document.getElementById('vaptcha_container_$id');
+_vaptcha = initVaptcha(vaptcha, form);
 
 <!--{if $isLogin}-->
 var loginbtn = form.parentElement.getElementsByTagName('button')['loginsubmit'];

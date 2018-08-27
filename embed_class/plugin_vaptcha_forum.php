@@ -68,7 +68,7 @@ JS;
 				if ($_GET['handlekey'] == 'vfastpost') {
 					$this->get_embed_captcha('vfastpostform', 'document.getElementById("vreplysubmit")');
 					return;
-				}
+                }
 				showmessage(lang('plugin/vaptcha', 'Please click the verify button below to man-machine validation'));
 			}
             $scene = $_GET['action'] == 'newthread' ? '03' : '';

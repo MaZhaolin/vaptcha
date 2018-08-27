@@ -78,7 +78,7 @@ class Vaptcha
      */
     public function validate($challenge, $token, $sceneId = "")
     {
-        if ($this->isDown || !$challenge)
+        if ($this->isDown)
             return $this->downTimeValidate($token);
         else
             return $this->normalValidate($challenge, $token, $sceneId);
@@ -173,14 +173,17 @@ class Vaptcha
 
     private function normalValidate($challenge, $token, $sceneId)
     {
-        if (!$token || !$challenge || $token != md5($this->key.'vaptcha'.$challenge))
+        if (!$token)
             return false;
         $url = API_URL.VALIDATE_URL;
         $now = $this->getCurrentTime();
-        $query = "id=$this->vid&scene=$sceneId&token=$token&time=$now&version=".VERSION.'&sdklang='.SDK_LANG;
-        $signature = $this->HMACSHA1($this->key, $query);
-        $response = self::postValidate($url, "$query&signature=$signature");
-        return 'success' == $response;
+        $query = "id=$this->vid&scene=$sceneId&secretkey=$this->key&token=$token&ip=$_SERVER[REMOTE_ADDR]";
+        // $query = "id=$this->vid&scene=$sceneId&token=$token&time=$now&version=".VERSION.'&sdklang='.SDK_LANG;
+        // $signature = $this->HMACSHA1($this->key, $query);
+        $response = json_decode(self::postValidate($url, $query));
+        // var_dump($response);
+        // die();
+        return $response->success == 1;
     }
 
     private function downTimeValidate($token)

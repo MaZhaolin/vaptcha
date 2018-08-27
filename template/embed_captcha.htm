@@ -3,52 +3,33 @@
     (function(){
         function onload() {
             var initVaptcha = function(element, form, type, successCallback){
-                var xmlHttp;
-                type = type || 'popup';
-                function createxmlHttpRequest() {
-                    if (window.ActiveXObject) {
-                        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-                    } else if (window.XMLHttpRequest) {
-                        xmlHttp = new XMLHttpRequest();
-                    }
+                var options = {
+                    vid: '$vid',
+                    container: element,
+                    type: type || 'popup',
+                    lang: '{$lang}',
+                    scene: '$scene',
+                    outage: './plugin.php?id=vaptcha&type=downtime',
                 }
-                createxmlHttpRequest();
-                xmlHttp.open("GET", './plugin.php?id=vaptcha&type=challenge&scene={$scene}&t=' + (new Date()).getTime());
-                xmlHttp.send(null);
-                xmlHttp.onreadystatechange = function(result) {
-                    if ((xmlHttp.readyState === 4) && (xmlHttp.status === 200)) {
-                        var data = JSON.parse(xmlHttp.responseText);
-                        var options = {
-                            vid: data.vid,
-                            challenge: data.challenge,
-                            container: element,
-                            type: type,
-                            lang: '{$lang}',
-                            outage: './plugin.php?id=vaptcha&type=downtime',
-                            success: function (token, challenge) {
-                                var inputs = form.getElementsByTagName('input');
-                                inputs['vaptcha_challenge'].value = challenge;
-                                inputs['vaptcha_token'].value = token;
-                                setTimeout(function(){
-                                    successCallback && successCallback();
-                                }, 300);
-                            }
-                        }
-                        window.vaptcha(options, function (obj) {
-                            var inputs = form.getElementsByTagName('input');
-                            inputs['vaptcha_challenge'].value = '';
-                            inputs['vaptcha_token'].value = '';
-                            vaptcha_obj = obj;
-                            vaptcha_obj.init();
-                        });             
-                    }
-                }
+                window.vaptcha(options).then(function (obj) {
+                    obj.listen('pass', function () {
+                        var inputs = form.getElementsByTagName('input');
+                        inputs['vaptcha_token'].value = obj.getToken();
+                        setTimeout(function () {
+                            successCallback && successCallback();
+                        }, 300);
+                    })
+                    var inputs = form.getElementsByTagName('input');
+                    inputs['vaptcha_token'].value = '';
+                    vaptcha_obj = obj;
+                    vaptcha_obj.render();
+                }) 
             }
             var vaptchaContainer = document.getElementById('discuz-vp-container-{$pos}');
             var form = document.getElementById('{$form}');
             !form && (form = $form);
             var inputs = form.getElementsByTagName('input');
-            !inputs['vaptcha_challenge'] && appendVaptchaForm();
+            !inputs['vaptcha_token'] && appendVaptchaForm();
             if(vaptchaContainer) {
                 vaptchaContainer.style.display = 'block';
                 {$refresh} && initVaptcha(vaptchaContainer.getElementsByClassName('vp-content')[0], form, 'embed', function(){
@@ -66,9 +47,7 @@
                 return input;
             }
             function appendVaptchaForm() {
-                var challengeInput = createInput('vaptcha_challenge');
                 var tokenInput = createInput('vaptcha_token');
-                form.appendChild(challengeInput);
                 form.appendChild(tokenInput);
             }
             function addEvent(el, type, cb){
@@ -123,7 +102,7 @@
             onload();
         } else {
             script = document.createElement('script');
-            script.src = 'https://cdn.vaptcha.com/v.js';
+            script.src = 'https://cdn.vaptcha.com/v2.js';
             script.id = 'vaptcha_v_js';
             script.onload = script.onreadystatechange = function(){
                 if(!this.readyState || this.readyState=='loaded' || this.readyState=='complete'){
