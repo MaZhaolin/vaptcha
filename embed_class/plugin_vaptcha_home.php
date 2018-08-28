@@ -21,17 +21,23 @@ class plugin_vaptcha_home extends plugin_vaptcha
         addEvent(document.getElementById('issuance'), 'click', function(e){
             if (!_vaptcha.isPass) {
                 _vaptcha.notify();
-                if(e && e.stopPropagation) { 
-                    e.stopPropagation(); 
+                if(e && e.stopPropagation) {
+                    e.stopPropagation();
                     e.preventDefault();
                 } else {
-                    window.event.cancelBubble = true; 
-                } 
+                    window.event.cancelBubble = true;
+                }
             }
         })
 JS;
 		return $this->get_captcha('blog_style', 'ttHtmlEditor', 'issuance', $script);
-	}
+    }
+    
+    function space_album_pic_face_extra() {
+        global $_G;
+		if(!$_G['uid'] || !$this->_cur_mod_is_valid()) return;
+		return $this->get_captcha('credit_style', 'quickcommentform_1', 'commentsubmit_btn', tpl_ajax_captcha());
+    }
 
 	//comment
 	public function space_blog_face_extra() {
@@ -48,7 +54,7 @@ JS;
 
 	 //handle validation
     public function spacecp_follow_recode(){
-    	if( ! $this->has_authority() || !$this->_cur_mod_is_valid() || !$this->vaptcha_open || $_GET['op'] == 'delete')return;
+    	if( ! $this->has_authority() || !$this->_cur_mod_is_valid() || !$this->vaptcha_open || $_GET['op'] != 'newthread')return;
         $challenge = $_GET['vaptcha_challenge'];
         $token = $_GET['vaptcha_token'];
 
@@ -69,7 +75,7 @@ JS;
             $validatePass = $this->vaptcha->Validate($challenge, $token);
             if (!$validatePass) {
                 $this->get_embed_captcha('fastpostform', 'document.getElementById("fastpostsubmit")', true);
-				// showmessage(lang('plugin/vaptcha', 'The second validation fails, please try refresh'));     
+				// showmessage(lang('plugin/vaptcha', 'The second validation fails, please try refresh'));
             } else {
                 $_SESSION['vp_follow_pass_count'] = 1;
             }
@@ -107,31 +113,29 @@ JS;
             }
         }
 
-
-
 		if(submitcheck('topicsubmit') || submitcheck('blogsubmit') || submitcheck('commentsubmit')) {
 				if(!$token) {
                     if ($_REQUEST['handlekey'] == 'c_'.$_REQUEST['cid'].'_reply') {
                         return $this->get_embed_captcha('replycommentform_'.$_REQUEST['cid'], 'document.getElementById("commentsubmit_btn")');
                     }
-	                showmessage(lang('plugin/vaptcha', 'Please click the verify button below to man-machine validation')); 
+	                showmessage(lang('plugin/vaptcha', 'Please click the verify button below to man-machine validation'));
 	            }
 	            $validatePass = $this->vaptcha->Validate($challenge, $token);
 	            if (!$validatePass) {
-	                showmessage(lang('plugin/vaptcha', 'The second validation fails, please try refresh'));     
+	                showmessage(lang('plugin/vaptcha', 'The second validation fails, please try refresh'));
 	            }
 			}
 	}
 
- 
-	function has_authority(){ 
+
+	function has_authority(){
         if( $_GET['mobile'] == 'no' && $_GET['submodule'] == 'checkpost' ){
             return false;
         }
-        
+
 		global $_G;
-		
-        $action = $_GET['ac']; 
+
+        $action = $_GET['ac'];
         if($action == 'follow' && $_G['group']['allowpost'] != 1 ){
             return false;
         }else if($action == 'blog' && $_G['group']['allowblog'] != 1 ){

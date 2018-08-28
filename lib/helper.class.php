@@ -27,7 +27,7 @@ class Helper {
                         'color' => '57ABFF',
                         'label' =>  lang('plugin/vaptcha', 'man_machine_validation'),
                         'style' =>  'dark', 
-                        'type' =>  'float',
+                        'type' =>  'popup',
                         'required' => true
                     ),
                     1 => array(
@@ -36,7 +36,7 @@ class Helper {
                         'color' => '57ABFF',
                         'label' =>  lang('plugin/vaptcha', 'man_machine_validation'),
                         'style' =>  'dark', 
-                        'type' =>  'float',
+                        'type' =>  'popup',
                         'required' => false
                     ),
                     2 => array(
