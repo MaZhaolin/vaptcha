@@ -111,6 +111,7 @@ class Helper {
         if (!isset($params['lang'])) {
             $params['lang'] = 'zh-CN';
         }
+        $params['version'] = VERSION;
         return $key ? $params[$key] : $params;
     }
 

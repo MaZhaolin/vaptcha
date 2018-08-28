@@ -12,6 +12,7 @@
         $scene = Helper::getScene();
         $lang = Helper::config('lang'); 
         $vid = Helper::config('vid');        
+        $version = Helper::config('version');  
     }
 <!--{block return}-->
 <style>
@@ -72,7 +73,7 @@ $nodes
 <script type='text/javascript'>
 (function () {
     window.console = window.console || {log: function() {return false;}}
-    console.log('vaptcha version 2.2.5')
+    console.log('vaptcha version $version')
     function addEvent(el, type, cb){
         if (el.addEventListener) {
             el.addEventListener(type, cb); 
